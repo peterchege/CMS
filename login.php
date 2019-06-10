@@ -1,7 +1,7 @@
 <?php
-    require_once('../inc/db.php');
-    require_once('../inc/sessions.php');
-    require_once('../inc/functions.php');
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
 
     if(isset($_POST['submit'])){
         $usernameEmail=test_input($_POST['usernameEmail']);
