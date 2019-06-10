@@ -1,40 +1,40 @@
 <?php
-    require_once('../inc/db.php');
-    require_once('../inc/sessions.php');
-    require_once('../inc/functions.php');
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
-    if(isset($_POST['submit'])){
-        $usernameEmail=test_input($_POST['usernameEmail']);
-        $password=test_input($_POST['password']);
-        $password=md5($password);
-        
-        if(empty($usernameEmail) || empty($password)){
-            $_SESSION['ErrorMessage']="All fields required";
-            //redirect_to("categories.php");
-        }elseif(strlen($usernameEmail)<4){
-            $_SESSION['ErrorMessage']="The name of the admin you entered is too short. At least 4 characters required";
-            //redirect_to("categories.php");
-        }elseif(strlen($usernameEmail)<4){
-            $_SESSION['ErrorMessage']="The name of the admin you entered is too short. At least 4 characters required";
-            //redirect_to("categories.php");
-        }else{
-            $found_account=login_attempt($usernameEmail,$password);
-            if($found_account){
-                $_SESSION['SuccessMessage']="Login successful";
-                $_SESSION['username']=$found_account['username'];
-                $_SESSION['user_id']=$found_account['id'];
-                $_SESSION['email']=$found_account['email'];
-                echo "<script>
+if (isset($_POST['submit'])) {
+    $usernameEmail = test_input($_POST['usernameEmail']);
+    $password = test_input($_POST['password']);
+    $password = md5($password);
+
+    if (empty($usernameEmail) || empty($password)) {
+        $_SESSION['ErrorMessage'] = "All fields required";
+        //redirect_to("categories.php");
+    } elseif (strlen($usernameEmail) < 4) {
+        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
+        //redirect_to("categories.php");
+    } elseif (strlen($usernameEmail) < 4) {
+        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
+        //redirect_to("categories.php");
+    } else {
+        $found_account = login_attempt($usernameEmail, $password);
+        if ($found_account) {
+            $_SESSION['SuccessMessage'] = "Login successful";
+            $_SESSION['username'] = $found_account['username'];
+            $_SESSION['user_id'] = $found_account['id'];
+            $_SESSION['email'] = $found_account['email'];
+            echo "<script>
                         alert('Login successful. Welcome.');
                     </script>";
-                echo "<script>
+            echo "<script>
                         window.open('index.php', '_SELF');
                         </script>";
-                }else{
-                    $_SESSION['ErrorMessage']="Email or password doesn't match database records. Please Try again.";
-                }
+        } else {
+            $_SESSION['ErrorMessage'] = "Email or password doesn't match database records. Please Try again.";
         }
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -85,8 +85,8 @@
                         </div>
                         <div class="login-form">
                             <?php
-                                echo Message();
-                                echo SuccessMessage();
+                            echo Message();
+                            echo SuccessMessage();
                             ?>
                             <form action="" method="post">
                                 <div class="form-group">
