@@ -1,13 +1,7 @@
 <?php
-<<<<<<< HEAD
 require_once('inc/db.php');
 require_once('inc/sessions.php');
 require_once('inc/functions.php');
-=======
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
->>>>>>> b74f5345d8a648adbc7b558614059dd6797ea89c
 
 if (isset($_POST['submit'])) {
     $usernameEmail = test_input($_POST['usernameEmail']);
