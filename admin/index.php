@@ -1,7 +1,7 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/db.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/sessions.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/functions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
 
     confirm_login();
     //dashboard table information

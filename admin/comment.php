@@ -1,13 +1,53 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/db.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/sessions.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/functions.php';
-
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
     confirm_login();
-    //dashboard table information
-    $viewQuery="SELECT * FROM admin_panel ORDER BY id desc ";
-    $execute=$conn->query($viewQuery);
-    $sno=0;
+    //approve comment
+    if(isset($_GET['approveComment'])){
+       $comment_id=$_GET['approveComment'];
+       $admin='Tony admin'; //$_SESSION['username'];
+       $query="UPDATE comments SET status='ON', approved_by='$admin' WHERE id='$comment_id' ";
+       $execute=$conn->query($query); 
+
+       if($execute){
+       	$_SESSION['SuccessMessage']='Comment approved successfully';
+       //	echo "<script>window.open('comments.php','_SELF');</script>";
+       }else{
+       	$_SESSION['ErrorMessage']='Something went terribly wrong. Please try again';
+       //	echo "<script>window.open('comments.php','_SELF');</script>";
+       }
+    }
+    
+    //delete comment
+    if (isset($_GET['deleteComment'])) {
+	$deleteComment_id=$_GET['deleteComment'];
+	$query="DELETE FROM comments WHERE id='$deleteComment_id'";
+	$execute=$conn->query($query);
+	if($execute){
+		$_SESSION['SuccessMessage']='Comment deleted successfully';
+		//echo "<script>window.open('comments.php','_SELF');</script>";
+
+	}else{
+		$_SESSION['Message']='Something went wrong';
+		//echo "<script>window.open('comments.php','_SELF');</script>";
+	}
+}
+    
+    //disapprove comment
+    if (isset($_GET['disApprove'])) {
+        $disapprove_id=$_GET['disApprove'];
+        $query="UPDATE comments SET status='OFF' WHERE id='$disapprove_id'";
+        $execute=$conn->query($query);
+	if($execute){
+		$_SESSION['SuccessMessage']='Comment disapproved successfully';
+		//echo "<script>window.open('comments.php','_SELF');</script>";
+
+	}else{
+		$_SESSION['Message']='Something went wrong';
+		//echo "<script>window.open('comments.php','_SELF');</script>";
+	}
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -84,17 +124,7 @@
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Manage Admin</a>
-                            <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li>
-                                    <a href="login.php">Login</a>
-                                </li>
-                                <li>
-                                    <a href="register.php">Register</a>
-                                </li>
-                                <li>
-                                    <a href="forget-pass.php">Forget Password</a>
-                                </li>
-                            </ul>
+
                         </li>
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
@@ -117,8 +147,8 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li class="active has-sub">
-                            <a class="js-arrow" href="#">
+                        <li class="has-sub">
+                            <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
 
                         </li>
@@ -136,15 +166,9 @@
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <li class="has-sub">
+                        <li class="active has-sub">
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                                    // counting unapproved comments
-                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
-                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                ?>
-                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
                         </li>
                         <li>
                             <a href="#">
@@ -228,180 +252,58 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
-                        <div class="row">
 
+
+                        <!-- UN-Approved Comments -->
+                        <div class="row">
                             <div class="col-md-12">
-                                <div class="overview-wrap">
-                                    <?php
+                                <?php
                                     echo Message();
                                     echo SuccessMessage();
                                 ?>
-                                    <h2 class="title-1">overview</h2>
-                                    <a href="newpost.php"><button class="au-btn au-btn-icon au-btn--blue2">
-                                            <i class="zmdi zmdi-plus"></i>add user</button></a>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c1">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-account-o"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php
-                                                  $adminNo=$conn->query("SELECT * FROM admin_registration"); 
-                                                echo mysqli_num_rows($adminNo);
-                                                ?>
-                                                </h2>
-                                                <span>Number of Admins</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart1"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c2">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-shopping-cart"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php
-                                                  $postsNo=$conn->query("SELECT * FROM admin_panel"); 
-                                                echo mysqli_num_rows($postsNo);
-                                                ?>
-                                                </h2>
-                                                <span>Number of Posts</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart2"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c3">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-calendar-note"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php
-                                                  $categoryNo=$conn->query("SELECT * FROM categories"); 
-                                                echo mysqli_num_rows($categoryNo);
-                                                ?>
-                                                </h2>
-                                                <span>Number of Categories</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart3"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-comment"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php
-                                                  $commentsNo=$conn->query("SELECT * FROM comments"); 
-                                                echo mysqli_num_rows($commentsNo);
-                                                ?>
-                                                </h2>
-                                                <span>Number of Comments</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart4"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
                                 <!-- DATA TABLE -->
-                                <h3 class="title-5 m-b-35">Posts table</h3>
-                                <div class="table-data__tool">
-                                    <div class="table-data__tool-right">
-                                        <a href="/unitedpicturesblog/admin/newpost.php"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
-                                    </div>
-                                </div>
+                                <h3 class="title-5 m-b-35">UN-APPROVED COMMENTS</h3>
                                 <div class="table-responsive table-responsive-data2">
                                     <table class="table table-data2">
                                         <thead>
                                             <tr>
+
                                                 <th>No</th>
-                                                <th>Post Title</th>
+                                                <th>Name</th>
                                                 <th>Date & Time</th>
-                                                <th>Author</th>
-                                                <th>Category</th>
-                                                <th>Banner</th>
                                                 <th>Comment</th>
-                                                <th>Action</th>
+                                                <th>Approve</th>
+                                                <th>Delete Comment</th>
                                                 <th>Detail</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php while($t=mysqli_fetch_assoc($execute)): ?>
+                                            <!--                                            fetching comments-->
+                                            <?php
+                                            $querySql="SELECT * FROM comments WHERE status='OFF' ORDER BY datetime desc ";
+                                            $executequery=$conn->query($querySql);
+                                            $sno=0;
+                                            ?>
+                                            <?php while($c=mysqli_fetch_assoc($executequery)): ?>
                                             <tr class="tr-shadow">
-                                                <td><?=++$sno;?></td>
-                                                <td><?=$t['title'];?></td>
-                                                <td><?=$t['datetime'];?></td>
-                                                <td class="desc"><?=$t['author'];?></td>
-                                                <td><?=$t['category'];?></td>
+                                                <td><?= ++$sno; ?></td>
+                                                <td class="desc"><?=$c['name'];?></td>
+                                                <td><?=$c['datetime'];?></td>
+                                                <td><?=((strlen($c['comment'])>1)?substr($c['comment'],0,110).'[..]':$c['comment']);?></td>
                                                 <td>
-                                                    <span class="status--process"><img style="width:200px; height:10%;" src="/../unitedpicturesblog/<?=$t['image']; ?>" /></span>
-                                                </td>
-                                                <td>
-                                                    <?php                                                    
-                                                    $id=$t['id'];
-                                                    // counting approved comments
-                                                    $queryApproved="SELECT * FROM comments WHERE admin_panel_id='$id' AND `status`='ON' ";
-                                                    $executeQueryApproved=$conn->query($queryApproved);
-                                                    
-                                                    // counting unapproved comments
-                                                    $queryUnapproved="SELECT * FROM comments WHERE admin_panel_id='$id' AND `status`='OFF' ";
-                                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                                    ?>
-
-                                                    <span class="label label-danger pull-left">
-                                                        <?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?>
-                                                    </span>
-                                                    <span class="label label-success pull-right">
-                                                        <?=$rowApproved=mysqli_num_rows($executeQueryApproved);?>
-                                                    </span>
-
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a href="editpost.php?edit=<?=$t['id'];?>"><button class="btn-success">Edit</button></a>
-                                                        <a href="deletepost.php?delete=<?=$t['id'];?>"><button class="btn-danger">Delete</button></a>
+                                                    <div class="table-data-feature1">
+                                                        <a href="comment.php?approveComment=<?=$c['id']; ?>"><button class="btn-success"><i class="fas fa-check-square"></i> &nbsp;Approve</button></a>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="table-data-feature">
-                                                        <a href="../fullpost.php?id=<?=$t['id'];?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                    <div class="table-data-feature1">
+                                                        <a href="comment.php?deleteComment=<?= $c['id'];?>"><button class="btn-danger">Delete</button></a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-data-feature1">
+                                                        <a href="../fullpost.php?id=<?=$c['admin_panel_id'];?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -413,6 +315,67 @@
                                 <!-- END DATA TABLE -->
                             </div>
                         </div><br>
+                        <br><br><br>
+
+                        <!-- Approved Comments -->
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <!-- DATA TABLE -->
+                                <h3 class="title-5 m-b-35">APPROVED COMMENTS</h3>
+                                <div class="table-responsive table-responsive-data2">
+                                    <table class="table table-data2">
+                                        <thead>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Name</th>
+                                                <th>Date & Time</th>
+                                                <th>Comment</th>
+                                                <th>Approved By</th>
+                                                <th>Revert Approve</th>
+                                                <th>Delet Comment</th>
+                                                <th>Details</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php                                                
+                                                $querySql="SELECT * FROM comments WHERE status='on' ORDER BY datetime desc";
+                                                $executequery=$conn->query($querySql);
+                                                $sno=0;
+                                                $admin='Tonydis'; //$_SESSION['username'];
+                                            ?>
+                                            <?php while($a=mysqli_fetch_assoc($executequery)): ?>
+                                            <tr class="tr-shadow">
+                                                <td><?=++$sno;?></td>
+                                                <td class="desc"><?= $a['name']; ?></td>
+                                                <td><?=$a['datetime']; ?></td>
+                                                <td><?= ((strlen($a['comment'])>1)?substr($a['comment'],0,150).'[..]':$c['comment']) ; ?></td>
+                                                <td><?=$a['approved_by']; ?></td>
+                                                <td>
+                                                    <div class="table-data-feature1">
+                                                        <a href="comment.php?disApprove=<?= $a['id']; ?>"><button class="btn-warning"><i class="fas  fa-minus-square"></i> &nbsp; Dis-Approve</button></a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-data-feature1">
+                                                        <a href="comment.php?deleteComment=<?= $a['id']; ?>"> <button class="btn-danger">Delete</button></a>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="table-data-feature1">
+                                                        <a href="../fullpost.php?id=<?= $a['admin_panel_id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="spacer"></tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END DATA TABLE -->
+                            </div>
+                        </div>
 
                         <div class="row">
                             <div class="col-md-12">
