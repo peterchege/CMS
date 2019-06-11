@@ -1,55 +1,55 @@
 <?php
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
-  confirm_login();
+confirm_login();
 
-  //adding new post
-  if(isset($_POST['submitEditedPost'])){
-    $title=test_input($_POST['title']);
-    $category=test_input($_POST['category']);
-    $post=test_input($_POST['post']);
-    $edit_id=$_GET['edit'];
-    
-    $currentTime=time();
-    $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
+//adding new post
+if (isset($_POST['submitEditedPost'])) {
+    $title = test_input($_POST['title']);
+    $category = test_input($_POST['category']);
+    $post = test_input($_POST['post']);
+    $edit_id = $_GET['edit'];
+
+    $currentTime = time();
+    $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
     $dateTime;
-    $admin=$_SESSION['username'];
+    $admin = $_SESSION['username'];
 
     //image validation
-    $photoFullname=$_FILES['image']['name'];
-    $photoFullnameExploded=explode('.',$photoFullname);
-    $photoName=$photoFullnameExploded[0];
-    $photoName=md5($photoName);
-    $photoExt=$photoFullnameExploded[1];
-    $fullPhotoName=$photoName.'.'.$photoExt;
-    $photoUploadPath='images/';
-    $tmp_loc=$_FILES['image']['tmp_name'];
+    $photoFullname = $_FILES['image']['name'];
+    $photoFullnameExploded = explode('.', $photoFullname);
+    $photoName = $photoFullnameExploded[0];
+    $photoName = md5($photoName);
+    $photoExt = $photoFullnameExploded[1];
+    $fullPhotoName = $photoName . '.' . $photoExt;
+    $photoUploadPath = 'images/';
+    $tmp_loc = $_FILES['image']['tmp_name'];
 
 
-    $target=$_SERVER['DOCUMENT_ROOT']."/unitedpicturesblog/images/".$fullPhotoName;
-    $pathandNameOfFile=$photoUploadPath.$fullPhotoName;
+    $target = $_SERVER['DOCUMENT_ROOT'] . "/unitedpicturesblog/images/" . $fullPhotoName;
+    $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
 
-    if(empty($title) || empty($category)){
-        $_SESSION['ErrorMessage']="Title can't be empty";
+    if (empty($title) || empty($category)) {
+        $_SESSION['ErrorMessage'] = "Title can't be empty";
         //redirect_to("categories.php");
-    }elseif(strlen($title)<2){
-        $_SESSION['ErrorMessage']="Title should be at least two characters";
+    } elseif (strlen($title) < 2) {
+        $_SESSION['ErrorMessage'] = "Title should be at least two characters";
         //redirect_to("categories.php");
-    }else{
-        move_uploaded_file($tmp_loc,$target);
-        $query="UPDATE admin_panel SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
+    } else {
+        move_uploaded_file($tmp_loc, $target);
+        $query = "UPDATE admin_panel SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
         $conn->query($query);
-        $_SESSION['SuccessMessage']="New post entered successfully";
+        $_SESSION['SuccessMessage'] = "New post entered successfully";
         echo "<script>alert('Post updated successfully');</script> ";
         echo "<script>window.open('index.php','_SELF')</script>";
     }
 }
 
 // extracting category data
-$queryCategory="SELECT * from categories";
-$run=$conn->query($queryCategory);
+$queryCategory = "SELECT * from categories";
+$run = $conn->query($queryCategory);
 
 ?>
 <!DOCTYPE html>
@@ -159,7 +159,7 @@ $run=$conn->query($queryCategory);
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li >
+                        <li>
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -181,11 +181,11 @@ $run=$conn->query($queryCategory);
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
                             <?php
-                                    // counting unapproved comments
-                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
-                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                ?>
-                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
+                            // counting unapproved comments
+                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
+                            $executeQueryUnapproved = $conn->query($queryUnapproved);
+                            ?>
+                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
                         </li> -->
                         <li>
                             <a href="logout.php">
@@ -217,7 +217,7 @@ $run=$conn->query($queryCategory);
                                             <img src="images/icon/peter.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
+                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -227,8 +227,8 @@ $run=$conn->query($queryCategory);
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
-                                                    <span class="email"><?=$_SESSION['email'];?></span>
+                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?= $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -260,66 +260,66 @@ $run=$conn->query($queryCategory);
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
                             <div class="card">
-                                
+
                                 <div class="card-body">
                                     <div class="card-title">
                                         <h3 class="text-center title-2">CREATE POST</h3>
                                         <?php
-                                            echo Message();
-                                            echo SuccessMessage();
+                                        echo Message();
+                                        echo SuccessMessage();
                                         ?>
                                     </div>
                                     <hr />
                                     <!-- Getting info based on edit id -->
                                     <?php
-                                    $edit_id=$_GET['edit'];
-                                    $searchQuery="SELECT * FROM admin_panel where id='$edit_id' ";
-                                    $runn=$conn->query($searchQuery);
+                                    $edit_id = $_GET['edit'];
+                                    $searchQuery = "SELECT * FROM admin_panel where id='$edit_id' ";
+                                    $runn = $conn->query($searchQuery);
                                     ?>
-                                    <?php while($e=mysqli_fetch_assoc($runn)): ?>
-                                    <form action="editpost.php?edit=<?=$edit_id;?>" method="post" novalidate="novalidate" enctype="multipart/form-data" >
-                                        <div class="form-group">
-                                            <label for="cc-payment" class="control-label mb-1">Title</label>
-                                            <input id="cc-pament" name="title" value="<?=$e['title'] ;?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
-                                        </div>
-                                        <div class="form-group has-success">
-                                            <label for="cc-name" class="control-label mb-1">Category</label>
-                                            <select name="category" id="select" class="form-control">
-                                                <option disabled selected value="0">Please select</option>
-                                                <?php while($c=mysqli_fetch_assoc($run)): ?>
-                                                <option <?=(($c['name']==$e['category'])?'selected':'');?> >
-                                                    <?=$c['name'];?>
-                                                </option>
-                                                <?php endwhile;?>
-                                            </select>
-                                            <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
-                                        </div>
-                                        <br />
-                                        <div class="form-group">
-                                            <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                            <img src="../<?=$e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;"/>
-                                        </div>
-                                        <br />
-                                        <div class="form-group">
-                                            <label for="cc-number" class="control-label mb-1">Upload Image</label>
-                                            <input type="file" id="file-input" name="image" class="form-control-file" value="../<?=$e['image']; ?>" />
-                                        </div>
-                                        <br />
-                                        <div class="row">
-                                            <div class="col col-md-12">
-                                                <label for="textarea-input" class=" form-control-label">Post</label>
+                                    <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
+                                        <form action="editpost.php?edit=<?= $edit_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                                            <div class="form-group">
+                                                <label for="cc-payment" class="control-label mb-1">Title</label>
+                                                <input id="cc-pament" name="title" value="<?= $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                             </div>
-                                            <div class="col-12 col-md-12">
-                                                <textarea name="post" id="textarea-input" rows="12" placeholder="Content..." class="form-control"><?=$e['post']; ?></textarea>
+                                            <div class="form-group has-success">
+                                                <label for="cc-name" class="control-label mb-1">Category</label>
+                                                <select name="category" id="select" class="form-control">
+                                                    <option disabled selected value="0">Please select</option>
+                                                    <?php while ($c = mysqli_fetch_assoc($run)) : ?>
+                                                        <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
+                                                            <?= $c['name']; ?>
+                                                        </option>
+                                                    <?php endwhile; ?>
+                                                </select>
+                                                <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
                                             </div>
-                                        </div>
-                                        <div>
                                             <br />
-                                            <button name="submitEditedPost" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                                <span id="payment-button-amount">Update Post</span>    
-                                            </button>
-                                        </div>
-                                    </form>
+                                            <div class="form-group">
+                                                <label for="cc-number" class="control-label mb-1">Existing Image</label>
+                                                <img src="../<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
+                                            </div>
+                                            <br />
+                                            <div class="form-group">
+                                                <label for="cc-number" class="control-label mb-1">Upload Image</label>
+                                                <input type="file" id="file-input" name="image" class="form-control-file" value="../<?= $e['image']; ?>" />
+                                            </div>
+                                            <br />
+                                            <div class="row">
+                                                <div class="col col-md-12">
+                                                    <label for="textarea-input" class=" form-control-label">Post</label>
+                                                </div>
+                                                <div class="col-12 col-md-12">
+                                                    <textarea name="post" id="textarea-input" rows="12" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <br />
+                                                <button name="submitEditedPost" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                    <span id="payment-button-amount">Update Post</span>
+                                                </button>
+                                            </div>
+                                        </form>
                                     <?php endwhile; ?>
                                 </div>
                             </div>
