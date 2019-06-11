@@ -1,7 +1,7 @@
 <?php
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
 if (isset($_POST['submit'])) {
     $usernameEmail = test_input($_POST['usernameEmail']);
@@ -114,17 +114,12 @@ if (isset($_POST['submit'])) {
                                     sign in
                                 </button>
                             </form>
-                            <div class="register-link">
-                                <p>
-                                    Don't you have account?
-                                    <a href="#">Contact admin</a>
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Jquery JS-->
