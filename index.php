@@ -99,7 +99,12 @@
                         <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
+<<<<<<< HEAD
                         </li>
+=======
+
+                        </li> -->
+>>>>>>> ea63602d9b933548fbe67bc285c5536e3e9d85bc
                     </ul>
                 </div>
             </nav>

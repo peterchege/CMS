@@ -1,25 +1,24 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/db.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/sessions.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
+  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
+  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
+  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
 
-confirm_login();
+  confirm_login();
 
-$delete_id = $_GET['delete'];
-//deleting post
-if (isset($_POST['deletePost'])) {
-
-    $query = "DELETE FROM admin_panel WHERE id='$delete_id'";
-    $conn->query($query);
-    $_SESSION['SuccessMessage'] = "Post deleted successfully";
-    echo "<script>alert('Post delete successfully');</script> ";
-    echo "<script>window.open('index.php','_SELF')</script>";
-    exit();
+  $delete_id=$_GET['delete'];
+  //adding new post
+  if(isset($_POST['deletePost'])){
+        
+        $query="DELETE FROM admnin_panel WHERE id='$delete_id'";
+        $conn->query($query);
+        $_SESSION['SuccessMessage']="New post entered successfully";
+        echo "<script>alert('Post delete successfully');</script> ";
+        echo "<script>window.open('index.php','_SELF')</script>";    
 }
 
 // extracting category data
-$queryCategory = "SELECT * from categories";
-$run = $conn->query($queryCategory);
+$queryCategory="SELECT * from categories";
+$run=$conn->query($queryCategory);
 
 ?>
 <!DOCTYPE html>
@@ -173,7 +172,7 @@ $run = $conn->query($queryCategory);
                                             <img src="images/icon/peter.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -183,8 +182,8 @@ $run = $conn->query($queryCategory);
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
+                                                    <span class="email"><?=$_SESSION['email'];?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -220,66 +219,66 @@ $run = $conn->query($queryCategory);
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
                             <div class="card">
-
+                                
                                 <div class="card-body">
                                     <div class="card-title">
                                         <h3 class="text-center title-2">CREATE POST</h3>
                                         <?php
-                                        echo Message();
-                                        echo SuccessMessage();
+                                            echo Message();
+                                            echo SuccessMessage();
                                         ?>
                                     </div>
                                     <hr />
                                     <!-- Getting info based on edit id -->
                                     <?php
-                                    $delete_id = $_GET['delete'];
-                                    $searchQuery = "SELECT * FROM admin_panel where id='$delete_id' ";
-                                    $runn = $conn->query($searchQuery);
+                                    $delete_id=$_GET['delete'];
+                                    $searchQuery="SELECT * FROM admin_panel where id='$delete_id' ";
+                                    $runn=$conn->query($searchQuery);
                                     ?>
-                                    <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
-                                        <form action="deletepost.php?delete=<?= $delete_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label for="cc-payment" class="control-label mb-1">Title</label>
-                                                <input id="cc-pament" name="title" value="<?= $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                    <?php while($e=mysqli_fetch_assoc($runn)): ?>
+                                    <form action="deletepost.php?delete=<?=$delete_id;?>" method="post" novalidate="novalidate" enctype="multipart/form-data" >
+                                        <div class="form-group">
+                                            <label for="cc-payment" class="control-label mb-1">Title</label>
+                                            <input id="cc-pament" name="title" value="<?=$e['title'] ;?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                        </div>
+                                        <div class="form-group has-success">
+                                            <label for="cc-name" class="control-label mb-1">Category</label>
+                                            <select name="category" id="select" class="form-control">
+                                                <option disabled selected value="0">Please select</option>
+                                                <?php while($c=mysqli_fetch_assoc($run)): ?>
+                                                <option <?=(($c['name']==$e['category'])?'selected':'');?> >
+                                                    <?=$c['name'];?>
+                                                </option>
+                                                <?php endwhile;?>
+                                            </select>
+                                            <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="cc-number" class="control-label mb-1">Existing Image</label>
+                                            <img src="../<?=$e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;"/>
+                                        </div>
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="cc-number" class="control-label mb-1">Upload Image</label>
+                                            <input type="file" id="file-input" name="image" class="form-control-file" value="../<?=$e['image']; ?>" />
+                                        </div>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col col-md-12">
+                                                <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
-                                            <div class="form-group has-success">
-                                                <label for="cc-name" class="control-label mb-1">Category</label>
-                                                <select name="category" id="select" class="form-control">
-                                                    <option disabled selected value="0">Please select</option>
-                                                    <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                        <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
-                                                            <?= $c['name']; ?>
-                                                        </option>
-                                                    <?php endwhile; ?>
-                                                </select>
-                                                <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
+                                            <div class="col-12 col-md-12">
+                                                <textarea name="post" id="textarea-input" rows="9" placeholder="Content..." class="form-control"><?=$e['post']; ?></textarea>
                                             </div>
+                                        </div>
+                                        <div>
                                             <br />
-                                            <div class="form-group">
-                                                <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                                <img src="../<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
-                                            </div>
-                                            <br />
-                                            <div class="form-group">
-                                                <label for="cc-number" class="control-label mb-1">Upload Image</label>
-                                                <input type="file" id="file-input" name="image" class="form-control-file" value="../<?= $e['image']; ?>" />
-                                            </div>
-                                            <br />
-                                            <div class="row">
-                                                <div class="col col-md-12">
-                                                    <label for="textarea-input" class=" form-control-label">Post</label>
-                                                </div>
-                                                <div class="col-12 col-md-12">
-                                                    <textarea name="post" id="textarea-input" rows="9" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <br />
-                                                <button name="deletePost" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                                    <span id="payment-button-amount">Delete Post</span>
-                                                </button>
-                                            </div>
-                                        </form>
+                                            <button name="deletePost" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                <span id="payment-button-amount">Delete Post</span>    
+                                            </button>
+                                        </div>
+                                    </form>
                                     <?php endwhile; ?>
                                 </div>
                             </div>
