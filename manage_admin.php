@@ -1,7 +1,8 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
+    
 
     confirm_login();
     if(isset($_POST['submitNewAdmin'])){

@@ -1,12 +1,12 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
 
-  confirm_login();
+    confirm_login();
 
   //adding new post
-  if(isset($_POST['submitPost']) && !empty($_FILES)){
+   if(isset($_POST['submitPost']) && !empty($_FILES)){
     $title=test_input($_POST['title']);
     $category=test_input($_POST['category']);
     $post=test_input($_POST['post']);

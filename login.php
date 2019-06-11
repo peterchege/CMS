@@ -102,8 +102,8 @@ if (isset($_POST['submit'])) {
                                     <!--
                                     <label>
                                         <input type="checkbox" name="remember" />Remember Me
-                                    </label>
--->
+                                    </label> 
+                                    -->
                                     <label>
                                         <a href="#">Forgotten Password?</a>
                                     </label>

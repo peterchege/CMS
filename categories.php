@@ -1,27 +1,28 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
     
     confirm_login();
+
     if(isset($_POST['submitCategory'])){
-      $category=test_input($_POST['categoryName']);
-      date_default_timezone_set("Africa/Nairobi");
-      $currentTime=time();
-      $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
-      $dateTime;
-      $admin=$_SESSION['username'];
-        $admin_email=$_SESSION['email'];
-      if(empty($category)){
-          $_SESSION['ErrorMessage']="Please enter a category. It can't be empty";
-          //redirect_to("categories.php");
-      }elseif(strlen($category)>99){
-          $_SESSION['ErrorMessage']="The name of the category you entered is too long";
-          //redirect_to("categories.php");
-      }else{
-          $query="INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
-          $conn->query($query);
-          $_SESSION['SuccessMessage']="New category entered successfully";
+        $category=test_input($_POST['categoryName']);
+        date_default_timezone_set("Africa/Nairobi");
+        $currentTime=time();
+        $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
+        $dateTime;
+        $admin=$_SESSION['username'];
+            $admin_email=$_SESSION['email'];
+        if(empty($category)){
+            $_SESSION['ErrorMessage']="Please enter a category. It can't be empty";
+            //redirect_to("categories.php");
+        }elseif(strlen($category)>99){
+            $_SESSION['ErrorMessage']="The name of the category you entered is too long";
+            //redirect_to("categories.php");
+        }else{
+            $query="INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
+            $conn->query($query);
+            $_SESSION['SuccessMessage']="New category entered successfully";
       }
   }
 
