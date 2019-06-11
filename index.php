@@ -54,7 +54,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.php">
-                            <img style="width:50%; margin-top:10px;" src="images/logo1.png" alt="CoolAdmin" />
+                            <img style="width:25%; margin-top:10px;" src="images/logon.png" alt="apallo group" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -99,12 +99,8 @@
                         <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
-<<<<<<< HEAD
-                        </li>
-=======
 
                         </li> -->
->>>>>>> ea63602d9b933548fbe67bc285c5536e3e9d85bc
                     </ul>
                 </div>
             </nav>
@@ -190,9 +186,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name">
-                                                        <a href="#"><?=$_SESSION['username'];?></a>
-                                                    </h5>
+                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
                                                     <span class="email"><?=$_SESSION['email'];?></span>
                                                 </div>
                                             </div>
@@ -205,14 +199,9 @@
                                                     <a href="#">
                                                         <i class="zmdi zmdi-settings"></i>Setting</a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                                </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="logout.php">
-                                                    <i class="zmdi zmdi-power"></i>Logout</a>
+                                                <a href="logout.php"> <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
                                     </div>

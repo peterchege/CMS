@@ -1,27 +1,28 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
     
     confirm_login();
+
     if(isset($_POST['submitCategory'])){
-      $category=test_input($_POST['categoryName']);
-      date_default_timezone_set("Africa/Nairobi");
-      $currentTime=time();
-      $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
-      $dateTime;
-      $admin=$_SESSION['username'];
-        $admin_email=$_SESSION['email'];
-      if(empty($category)){
-          $_SESSION['ErrorMessage']="Please enter a category. It can't be empty";
-          //redirect_to("categories.php");
-      }elseif(strlen($category)>99){
-          $_SESSION['ErrorMessage']="The name of the category you entered is too long";
-          //redirect_to("categories.php");
-      }else{
-          $query="INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
-          $conn->query($query);
-          $_SESSION['SuccessMessage']="New category entered successfully";
+        $category=test_input($_POST['categoryName']);
+        date_default_timezone_set("Africa/Nairobi");
+        $currentTime=time();
+        $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
+        $dateTime;
+        $admin=$_SESSION['username'];
+            $admin_email=$_SESSION['email'];
+        if(empty($category)){
+            $_SESSION['ErrorMessage']="Please enter a category. It can't be empty";
+            //redirect_to("categories.php");
+        }elseif(strlen($category)>99){
+            $_SESSION['ErrorMessage']="The name of the category you entered is too long";
+            //redirect_to("categories.php");
+        }else{
+            $query="INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
+            $conn->query($query);
+            $_SESSION['SuccessMessage']="New category entered successfully";
       }
   }
 
@@ -49,9 +50,9 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="au theme template" />
+    <meta name="description" content="" />
     <meta name="author" content="Peter Chege" />
-    <meta name="keywords" content="au theme template" />
+    <meta name="keywords" content="" />
 
     <!-- Title Page-->
     <title>Dashboard</title>
@@ -86,7 +87,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.php">
-                            <img style="width:50%; margin-top:10px;" src="images/logo1.png" alt="CoolAdmin" />
+                            <img style="width:25%; margin-top:10px;" src="images/logon.png" alt="apallo group" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -100,29 +101,39 @@
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="index.php">
+                            <a class="js-arrow" href="#">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+
                         </li>
                         <li>
-                            <a href="newpost.php"> <i class="fas fa-chart-bar"></i>New Post</a>
+                            <a href="#">
+                                <i class="fas fa-chart-bar"></i>New Post</a>
                         </li>
                         <li>
-                            <a href="categories.php"> <i class="fas fa-table"></i>Categories</a>
+                            <a href="#">
+                                <i class="fas fa-table"></i>Categories</a>
                         </li>
 
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Manage Admin</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li><a href="login.php">Login</a></li>
-                                <li><a href="register.php">Register</a></li>
-                                <li><a href="forget-pass.php">Forget Password</a></li>
+                                <li>
+                                    <a href="login.php">Login</a>
+                                </li>
+                                <li>
+                                    <a href="register.php">Register</a>
+                                </li>
+                                <li>
+                                    <a href="forget-pass.php">Forget Password</a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
-                        </li>
+
+                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -133,13 +144,13 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img style="width:80%; margin-top:10px;" src="images/logo1.png" alt="United Pictures" />
+                    <img style="width:40%; margin-left:40px; margin-top:0px;" src="images/logon.png" alt="apollo group" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li>
+                        <li >
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -148,23 +159,29 @@
                             <a href="newpost.php">
                                 <i class="fas  fa-list-alt"></i>New Post</a>
                         </li>
+
                         <li class="active has-sub">
-                            <a href="categories.php"> <i class="fas fa-tags"></i>Categories</a>
+                            <a href="categories.php">
+                                <i class="fas fa-tags"></i>Categories</a>
                         </li>
 
                         <li class="has-sub">
                             <a class="js-arrow" href="manage_admin.php">
-                                <i class="fas fa-desktop"></i>Manage Admin</a>
+                                <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
-                        </li>
+                            <?php
+                                    // counting unapproved comments
+                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
+                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
+                                ?>
+                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
+                        </li> -->
                         <li>
-                            <a href="#"> <i class="fas  fa-rss"></i>Live Blog</a>
-                        </li>
-                        <li>
-                            <a href="logout.php"> <i class="zmdi zmdi-power"></i>Log Out</a>
+                            <a href="logout.php">
+                                <i class="zmdi zmdi-power"></i>Log Out</a>
                         </li>
                     </ul>
                 </nav>
@@ -215,10 +232,6 @@
                                                     <a href="#">
                                                         <i class="zmdi zmdi-settings"></i>Setting</a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                                </div>
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="logout.php"> <i class="zmdi zmdi-power"></i>Logout</a>
@@ -249,9 +262,9 @@
                                     <form action="categories.php" method="post" novalidate="novalidate">
                                         <div class="form-group">
                                             <?php
-                                          echo Message();
-                                          echo SuccessMessage();
-                                        ?>
+                                            echo Message();
+                                            echo SuccessMessage();
+                                            ?>
                                             <label for="cc-payment" class="control-label mb-1">Name</label><br>
                                             <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?=((isset($category))?$category:''); ?>" />
                                         </div>
@@ -268,7 +281,7 @@
 
 
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-12 offset-md-1">
                                 <!-- USER DATA-->
                                 <div class="user-data m-b-30">
                                     <h3 class="title-3 m-b-30"><i class="zmdi zmdi-account-calendar"></i>Manage Category</h3>

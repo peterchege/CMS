@@ -1,7 +1,7 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/db.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/sessions.php';
-  require_once $_SERVER['DOCUMENT_ROOT'].'/unitedpicturesblog/inc/functions.php';
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
 
   confirm_login();
 
@@ -59,9 +59,9 @@ $run=$conn->query($queryCategory);
     <!-- Required meta tags-->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content="au theme template" />
+    <meta name="description" content="" />
     <meta name="author" content="Peter Chege" />
-    <meta name="keywords" content="au theme template" />
+    <meta name="keywords" content="" />
 
     <!-- Title Page-->
     <title>Update Post</title>
@@ -96,7 +96,7 @@ $run=$conn->query($queryCategory);
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.php">
-                            <img style="width:50%; margin-top:10px;" src="images/logo1.png" alt="CoolAdmin" />
+                            <img style="width:25%; margin-top:10px;" src="images/logon.png" alt="apallo group" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
@@ -110,29 +110,39 @@ $run=$conn->query($queryCategory);
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="index.php">
+                            <a class="js-arrow" href="#">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+
                         </li>
                         <li>
-                            <a href="#"> <i class="fas fa-chart-bar"></i>New Post</a>
+                            <a href="#">
+                                <i class="fas fa-chart-bar"></i>New Post</a>
                         </li>
                         <li>
-                            <a href="#"> <i class="fas fa-table"></i>Categories</a>
+                            <a href="#">
+                                <i class="fas fa-table"></i>Categories</a>
                         </li>
 
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-copy"></i>Manage Admin</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
-                                <li><a href="login.php">Login</a></li>
-                                <li><a href="register.php">Register</a></li>
-                                <li><a href="forget-pass.php">Forget Password</a></li>
+                                <li>
+                                    <a href="login.php">Login</a>
+                                </li>
+                                <li>
+                                    <a href="register.php">Register</a>
+                                </li>
+                                <li>
+                                    <a href="forget-pass.php">Forget Password</a>
+                                </li>
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
-                        </li>
+
+                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -143,13 +153,13 @@ $run=$conn->query($queryCategory);
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img style="width:80%; margin-top:10px;" src="images/logo1.png" alt="United Pictures" />
+                    <img style="width:40%; margin-left:40px; margin-top:0px;" src="images/logon.png" alt="apollo group" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li>
+                        <li >
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -165,17 +175,21 @@ $run=$conn->query($queryCategory);
 
                         <li class="has-sub">
                             <a class="js-arrow" href="manage_admin.php">
-                                <i class="fas fa-desktop"></i>Manage Admin</a>
+                                <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
-                        </li>
+                            <?php
+                                    // counting unapproved comments
+                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
+                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
+                                ?>
+                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
+                        </li> -->
                         <li>
-                            <a href="#"> <i class="fas  fa-rss"></i>Live Blog</a>
-                        </li>
-                        <li>
-                            <a href="logout.php"> <i class="zmdi zmdi-power"></i>Log Out</a>
+                            <a href="logout.php">
+                                <i class="zmdi zmdi-power"></i>Log Out</a>
                         </li>
                     </ul>
                 </nav>
@@ -226,10 +240,6 @@ $run=$conn->query($queryCategory);
                                                     <a href="#">
                                                         <i class="zmdi zmdi-settings"></i>Setting</a>
                                                 </div>
-                                                <div class="account-dropdown__item">
-                                                    <a href="#">
-                                                        <i class="zmdi zmdi-money-box"></i>Billing</a>
-                                                </div>
                                             </div>
                                             <div class="account-dropdown__footer">
                                                 <a href="logout.php"> <i class="zmdi zmdi-power"></i>Logout</a>
@@ -248,7 +258,7 @@ $run=$conn->query($queryCategory);
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="row">
-                        <div class="col-md-8 offset-md-2">
+                        <div class="col-md-10 offset-md-1">
                             <div class="card">
                                 
                                 <div class="card-body">
@@ -300,7 +310,7 @@ $run=$conn->query($queryCategory);
                                                 <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
                                             <div class="col-12 col-md-12">
-                                                <textarea name="post" id="textarea-input" rows="9" placeholder="Content..." class="form-control"><?=$e['post']; ?></textarea>
+                                                <textarea name="post" id="textarea-input" rows="12" placeholder="Content..." class="form-control"><?=$e['post']; ?></textarea>
                                             </div>
                                         </div>
                                         <div>
