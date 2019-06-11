@@ -257,7 +257,7 @@
             <div class="main-content">
                 <div class="section__content section__content--p30">
                     <div class="row">
-                        <div class="col-md-8 offset-md-2">
+                        <div class="col-md-10 offset-md-1">
                             <div class="card">
 
                                 <div class="card-body">
