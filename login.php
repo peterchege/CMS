@@ -1,7 +1,7 @@
 <?php
-require_once('inc/db.php');
-require_once('inc/sessions.php');
-require_once('inc/functions.php');
+    require_once('inc/db.php');
+    require_once('inc/sessions.php');
+    require_once('inc/functions.php');
 
 if (isset($_POST['submit'])) {
     $usernameEmail = test_input($_POST['usernameEmail']);
@@ -44,8 +44,8 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="au theme template" />
-    <meta name="author" content="Hau Nguyen" />
-    <meta name="keywords" content="au theme template" />
+    <meta name="author" content="PETER CHEGE " />
+    <meta name="keywords" content="" />
 
     <!-- Title Page-->
     <title>Login</title>
@@ -73,14 +73,14 @@ if (isset($_POST['submit'])) {
 </head>
 
 <body class="animsition bg-back">
-    <div class="page-wrapper">
+    <div class="page-wrapper page-wrapper1">
         <div class="page-content--bge1">
             <div class="container">
-                <div class="login-wrap">
+                <div class="login-wrap ">
                     <div class="login-content">
                         <div class="login-logo">
                             <a href="#">
-                                <img class="logo1" src="images/logo1.png" alt="United Pictures" />
+                                <img class="logo1" src="images/logon.png" alt="APollo Group" />
                             </a>
                         </div>
                         <div class="login-form">
@@ -88,10 +88,10 @@ if (isset($_POST['submit'])) {
                             echo Message();
                             echo SuccessMessage();
                             ?>
-                            <form action="" method="post">
+                            <form class="media-form" action="" method="post">
                                 <div class="form-group">
-                                    <label>Email Address/Username</label>
-                                    <input class="au-input au-input--full" type="text" name="usernameEmail" placeholder="Email/Username" />
+                                    <label>Email Address</label>
+                                    <input class="au-input au-input--full" type="text" name="usernameEmail" placeholder="Email" />
                                 </div>
                                 <div class="form-group">
                                     <label>Password</label>

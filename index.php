@@ -16,9 +16,9 @@
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="au theme template">
+    <meta name="description" content="">
     <meta name="author" content="Peter Chege">
-    <meta name="keywords" content="au theme template">
+    <meta name="keywords" content="">
 
     <!-- Title Page-->
     <title>Dashboard</title>
@@ -96,10 +96,15 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
+<<<<<<< HEAD
                         </li>
+=======
+
+                        </li> -->
+>>>>>>> ea63602d9b933548fbe67bc285c5536e3e9d85bc
                     </ul>
                 </div>
             </nav>
@@ -110,7 +115,7 @@
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="#">
-                    <img style="width:80%; margin-top:10px;" src="images/logo1.png" alt="United Pictures" />
+                    <img style="width:40%; margin-left:40px; margin-top:0px;" src="images/logon.png" alt="apollo group" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -135,7 +140,7 @@
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <li class="has-sub">
+                        <!-- <li class="has-sub">
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
                             <?php
@@ -144,11 +149,7 @@
                                     $executeQueryUnapproved=$conn->query($queryUnapproved);
                                 ?>
                             <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="fas  fa-rss"></i>Live Blog</a>
-                        </li>
+                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -236,14 +237,14 @@
                                     echo SuccessMessage();
                                 ?>
                                     <h2 class="title-1">overview</h2>
-                                    <a href="newpost.php"><button class="au-btn au-btn-icon au-btn--blue2">
+                                    <a href="manage_admin.php"><button class="au-btn au-btn-icon au-btn--blue2">
                                             <i class="zmdi zmdi-plus"></i>add user</button></a>
                                 </div>
                             </div>
 
                         </div>
                         <div class="row m-t-25">
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div class="overview-item overview-item--c1">
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
@@ -266,7 +267,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div class="overview-item overview-item--c2">
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
@@ -289,7 +290,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-lg-3">
+                            <div class="col-sm-6 col-lg-4">
                                 <div class="overview-item overview-item--c3">
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
@@ -312,7 +313,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6 col-lg-3">
+                            <!-- <div class="col-sm-6 col-lg-3">
                                 <div class="overview-item overview-item--c4">
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
@@ -334,7 +335,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
 
                         <div class="row">
@@ -356,7 +357,6 @@
                                                 <th>Author</th>
                                                 <th>Category</th>
                                                 <th>Banner</th>
-                                                <th>Comment</th>
                                                 <th>Action</th>
                                                 <th>Detail</th>
                                             </tr>
@@ -372,26 +372,7 @@
                                                 <td>
                                                     <span class="status--process"><img style="width:200px; height:10%;" src="/../unitedpicturesblog/<?=$t['image']; ?>" /></span>
                                                 </td>
-                                                <td>
-                                                    <?php                                                    
-                                                    $id=$t['id'];
-                                                    // counting approved comments
-                                                    $queryApproved="SELECT * FROM comments WHERE admin_panel_id='$id' AND `status`='ON' ";
-                                                    $executeQueryApproved=$conn->query($queryApproved);
-                                                    
-                                                    // counting unapproved comments
-                                                    $queryUnapproved="SELECT * FROM comments WHERE admin_panel_id='$id' AND `status`='OFF' ";
-                                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                                    ?>
-
-                                                    <span class="label label-danger pull-left">
-                                                        <?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?>
-                                                    </span>
-                                                    <span class="label label-success pull-right">
-                                                        <?=$rowApproved=mysqli_num_rows($executeQueryApproved);?>
-                                                    </span>
-
-                                                </td>
+                                                
                                                 <td>
                                                     <div class="table-data-feature">
                                                         <a href="editpost.php?edit=<?=$t['id'];?>"><button class="btn-success">Edit</button></a>

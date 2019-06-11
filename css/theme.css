@@ -101,7 +101,8 @@ p {
 
 /*====== Login page===== */
 .bg-back {
-    background-image: url(../images/lion.jpg);
+    background-image: url(../images/media.jpg);
+    background-size: cover;
 }
 
 .logo1 {
@@ -289,6 +290,12 @@ section {
 /*Page Objects*/
 .page-wrapper {
     overflow: hidden;
+   
+}
+
+.page-wrapper1 {
+    float: right;
+    width: 50%;
 }
 
 .page-container {
@@ -389,11 +396,18 @@ section {
 }
 
 .login-content {
-    background: #fff;
+    background: #0D345F;
     padding: 30px 30px 20px;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
-    border-radius: 2px;
+    border-radius: 50px;
+    opacity: 0.9;
+}
+
+.login-form .media-form {
+    color: #fff;
+    width: 85%;
+    margin: 0 auto;
 }
 
 .social-login-content {
@@ -406,6 +420,7 @@ section {
     padding-top: 15px;
     text-align: center;
     font-size: 14px;
+    color: #fff;
 }
 
 .register-link > p > a {
