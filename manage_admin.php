@@ -319,39 +319,15 @@
 
 
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-10 offset-md-1">
                             <!-- USER DATA-->
                             <div class="user-data m-b-30">
                                 <h3 class="title-3 m-b-30">
                                     <i class="zmdi zmdi-account-calendar"></i>Manage Admins</h3>
-                                <div class="filters m-b-45">
-                                    <div class="rs-select2--dark rs-select2--md m-r-10 rs-select2--border">
-                                        <select class="js-select2" name="property">
-                                            <option selected="selected">All Properties</option>
-                                            <option value="">Products</option>
-                                            <option value="">Services</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                    <div class="rs-select2--dark rs-select2--sm rs-select2--border">
-                                        <select class="js-select2 au-select-dark" name="time">
-                                            <option selected="selected">All Time</option>
-                                            <option value="">By Month</option>
-                                            <option value="">By Day</option>
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
-                                </div>
                                 <div class="table-responsive table-data">
                                     <table class="table">
                                         <thead>
                                             <tr>
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
                                                 <td>Sr No.</td>
                                                 <td>Date & Time</td>
                                                 <td>Admin Name</td>
@@ -369,12 +345,7 @@
                                             ?>
                                             <?php while($a=mysqli_fetch_assoc($run)):  ?>
                                             <tr>
-                                                <td>
-                                                    <label class="au-checkbox">
-                                                        <input type="checkbox">
-                                                        <span class="au-checkmark"></span>
-                                                    </label>
-                                                </td>
+                                                
                                                 <td>
                                                     <?= ++$SrNo; ?>
                                                 </td>
