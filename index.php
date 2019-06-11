@@ -99,7 +99,6 @@
                         <li class="has-sub">
                             <a class="js-arrow" href="#">
                                 <i class="fas fa-desktop"></i>Comment</a>
-
                         </li>
                     </ul>
                 </div>
