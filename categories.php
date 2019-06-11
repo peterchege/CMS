@@ -1,47 +1,47 @@
 <?php
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
-    
-    confirm_login();
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
-    if(isset($_POST['submitCategory'])){
-        $category=test_input($_POST['categoryName']);
-        date_default_timezone_set("Africa/Nairobi");
-        $currentTime=time();
-        $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
-        $dateTime;
-        $admin=$_SESSION['username'];
-            $admin_email=$_SESSION['email'];
-        if(empty($category)){
-            $_SESSION['ErrorMessage']="Please enter a category. It can't be empty";
-            //redirect_to("categories.php");
-        }elseif(strlen($category)>99){
-            $_SESSION['ErrorMessage']="The name of the category you entered is too long";
-            //redirect_to("categories.php");
-        }else{
-            $query="INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
-            $conn->query($query);
-            $_SESSION['SuccessMessage']="New category entered successfully";
-      }
-  }
+confirm_login();
 
-  // Delete  category
-  if(isset($_GET['delete'])){
-    $delete_id=$_GET['delete'];
-    $deleteQuery="DELETE FROM categories WHERE id='$delete_id'";
-    $deleteQueryExecute=$conn->query($deleteQuery);
-    if($deleteQueryExecute){        
-        $_SESSION['SuccessMessage']='Category deleted successfully';
-    }else{
-        $_SESSION['Message']='Something went terribly wrong. Please try again';
+if (isset($_POST['submitCategory'])) {
+    $category = test_input($_POST['categoryName']);
+    date_default_timezone_set("Africa/Nairobi");
+    $currentTime = time();
+    $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
+    $dateTime;
+    $admin = $_SESSION['username'];
+    $admin_email = $_SESSION['email'];
+    if (empty($category)) {
+        $_SESSION['ErrorMessage'] = "Please enter a category. It can't be empty";
+        //redirect_to("categories.php");
+    } elseif (strlen($category) > 99) {
+        $_SESSION['ErrorMessage'] = "The name of the category you entered is too long";
+        //redirect_to("categories.php");
+    } else {
+        $query = "INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
+        $conn->query($query);
+        $_SESSION['SuccessMessage'] = "New category entered successfully";
     }
 }
 
-  //Extracting category data
- $extract="SELECT * FROM categories ORDER BY datetime desc";
- $run=$conn->query($extract);
- $SrNo=0;
+// Delete  category
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+    $deleteQuery = "DELETE FROM categories WHERE id='$delete_id'";
+    $deleteQueryExecute = $conn->query($deleteQuery);
+    if ($deleteQueryExecute) {
+        $_SESSION['SuccessMessage'] = 'Category deleted successfully';
+    } else {
+        $_SESSION['Message'] = 'Something went terribly wrong. Please try again';
+    }
+}
+
+//Extracting category data
+$extract = "SELECT * FROM categories ORDER BY datetime desc";
+$run = $conn->query($extract);
+$SrNo = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -150,7 +150,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li >
+                        <li>
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -173,11 +173,11 @@
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
                             <?php
-                                    // counting unapproved comments
-                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
-                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                ?>
-                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
+                            // counting unapproved comments
+                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
+                            $executeQueryUnapproved = $conn->query($queryUnapproved);
+                            ?>
+                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
                         </li> -->
                         <li>
                             <a href="logout.php">
@@ -209,7 +209,7 @@
                                             <img src="images/icon/peter.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
+                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -219,8 +219,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
-                                                    <span class="email"><?=$_SESSION['email'];?></span>
+                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?= $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -266,7 +266,7 @@
                                             echo SuccessMessage();
                                             ?>
                                             <label for="cc-payment" class="control-label mb-1">Name</label><br>
-                                            <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?=((isset($category))?$category:''); ?>" />
+                                            <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?= ((isset($category)) ? $category : ''); ?>" />
                                         </div>
                                         <br>
 
@@ -298,31 +298,31 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php  while($t=mysqli_fetch_assoc($run)): ?>
-                                                <tr>
-                                                    <td>
-                                                        <?=++$SrNo?>
-                                                    </td>
-                                                    <td>
-                                                        <?=$t['datetime'];?>
-                                                    </td>
-                                                    <td>
-                                                        <?=$t['name'];?>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data__info">
-                                                            <h6><?=$t['creatorname'];?></h6>
-                                                            <span>
-                                                                <a href=""><?= $t['email']; ?> </a>
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="table-data-feature1">
-                                                            <a href="categories.php?delete=<?=test_input($t['id']);?>"><button class="btn-danger"><i class="fas fa-ban flex-left"></i> Delete</button></a>
-                                                        </div>
-                                                    </td>
-                                                </tr>
+                                                <?php while ($t = mysqli_fetch_assoc($run)) : ?>
+                                                    <tr>
+                                                        <td>
+                                                            <?= ++$SrNo ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $t['datetime']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <?= $t['name']; ?>
+                                                        </td>
+                                                        <td>
+                                                            <div class="table-data__info">
+                                                                <h6><?= $t['creatorname']; ?></h6>
+                                                                <span>
+                                                                    <a href=""><?= $t['email']; ?> </a>
+                                                                </span>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="table-data-feature1">
+                                                                <a href="categories.php?delete=<?= test_input($t['id']); ?>"><button class="btn-danger"><i class="fas fa-ban flex-left"></i> Delete</button></a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
                                                 <?php endwhile; ?>
                                             </tbody>
                                         </table>
