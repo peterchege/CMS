@@ -54,7 +54,7 @@
                 <div class="container-fluid">
                     <div class="header-mobile-inner">
                         <a class="logo" href="index.php">
-                            <img style="width:50%; margin-top:10px;" src="images/logo1.png" alt="CoolAdmin" />
+                            <img style="width:25%; margin-top:10px;" src="images/logon.png" alt="apallo group" />
                         </a>
                         <button class="hamburger hamburger--slider" type="button">
                             <span class="hamburger-box">
