@@ -1,46 +1,44 @@
 <?php
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
-    confirm_login();
+confirm_login();
 
-  //adding new post
-   if(isset($_POST['submitPost']) && !empty($_FILES)){
-    $title=test_input($_POST['title']);
-    $category=test_input($_POST['category']);
-    $post=test_input($_POST['post']);
-    
-    $currentTime=time();
-    $dateTime=strftime("%d,%B %Y %H:%M:%S",$currentTime);
+//adding new post
+if (isset($_POST['submitPost']) && !empty($_FILES)) {
+    $title = test_input($_POST['title']);
+    $category = test_input($_POST['category']);
+    $post = test_input($_POST['post']);
+
+    $currentTime = time();
+    $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
     $dateTime;
-    $admin=$_SESSION['username'];
+    $admin = $_SESSION['username'];
 
     //image validation
-    $photoFullname=$_FILES['image']['name'];
-    $photoFullnameExploded=explode('.',$photoFullname);
-    $photoName=$photoFullnameExploded[0];
-    $photoName=md5($photoName);
-    $photoExt=$photoFullnameExploded[1];
-    $fullPhotoName=$photoName.'.'.$photoExt;
-    $photoUploadPath='images/';
-    $tmp_loc=$_FILES['image']['tmp_name'];
+    $photoFullname = $_FILES['image']['name'];
+    $photoFullnameExploded = explode('.', $photoFullname);
+    $photoName = $photoFullnameExploded[0];
+    $photoName = md5($photoName);
+    $photoExt = $photoFullnameExploded[1];
+    $fullPhotoName = $photoName . '.' . $photoExt;
+    $photoUploadPath = 'images/';
+    $tmp_loc = $_FILES['image']['tmp_name'];
 
 
-    $target=$_SERVER['DOCUMENT_ROOT']."/unitedpicturesblog/images/".$fullPhotoName;
-    $pathandNameOfFile=$photoUploadPath.$fullPhotoName;
+    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/" . $fullPhotoName;
+    $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
 
-    if(empty($title) || empty($category)){
-        $_SESSION['ErrorMessage']="Title can't be empty";
-        //redirect_to("categories.php");
-    }elseif(strlen($title)<2){
-        $_SESSION['ErrorMessage']="Title should be at least two characters";
-        //redirect_to("categories.php");
-    }else{
-        move_uploaded_file($tmp_loc,$target);
-        $query="INSERT INTO admin_panel(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
+    if (empty($title) || empty($category)) {
+        $_SESSION['ErrorMessage'] = "Title and Category can't be empty";
+    } elseif (strlen($title) < 2) {
+        $_SESSION['ErrorMessage'] = "Title should be at least two characters";
+    } else {
+        move_uploaded_file($tmp_loc, $target);
+        $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
         $conn->query($query);
-        $_SESSION['SuccessMessage']="New post entered successfully";
+        $_SESSION['SuccessMessage'] = "New post entered successfully";
     }
 }
 
@@ -110,11 +108,11 @@
 
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="newpost.php">
                                 <i class="fas fa-chart-bar"></i>New Post</a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="categories.php">
                                 <i class="fas fa-table"></i>Categories</a>
                         </li>
 
@@ -154,7 +152,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li >
+                        <li>
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -172,16 +170,6 @@
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="comment.php">
-                                <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                                    // counting unapproved comments
-                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
-                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                ?>
-                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
-                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -200,30 +188,30 @@
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
-                                </button>
+                                </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
+                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
-                                                    <span class="email"><?=$_SESSION['email'];?></span>
+                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?= $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -260,46 +248,45 @@
                                     <div class="card-title">
                                         <h3 class="text-center title-2">CREATE POST</h3>
                                         <?php
-                                            echo Message();
-                                            echo SuccessMessage();
+                                        echo Message();
+                                        echo SuccessMessage();
                                         ?>
                                     </div>
                                     <hr />
-                                    <form action="" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="cc-payment" class="control-label mb-1">Title</label>
-                                            <input id="cc-pament" name="title" value="<?=((isset($title))?$title:'');?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                            <input id="cc-pament" name="title" value="<?= ((isset($title)) ? $title : ''); ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                         </div>
                                         <div class="form-group has-success">
                                             <label for="cc-name" class="control-label mb-1">Category</label>
                                             <select name="category" id="select" class="form-control">
                                                 <option disabled selected value="0">Please select</option>
                                                 <?php
-                                              //Extracting category data
-                                              $extract="SELECT * FROM categories ORDER BY datetime desc";
-                                              $run=$conn->query($extract);
-                                              $SrNo=0; 
-                                            ?>
-                                                <?php while($c=mysqli_fetch_assoc($run)): ?>
-                                                <option <?php ((isset($category) && $category==$c['name'] )?'selected':''); ?>>
-                                                    <?=$c['name'];?>
-                                                </option>
-                                                <?php endwhile;?>
+                                                //Extracting category data
+                                                $extract = "SELECT * FROM media_centre_categories ORDER BY datetime desc";
+                                                $run = $conn->query($extract);
+                                                $SrNo = 0;
+                                                ?>
+                                                <?php while ($c = mysqli_fetch_assoc($run)) : ?>
+                                                    <option <?php ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
+                                                        <?= $c['name']; ?>
+                                                    </option>
+                                                <?php endwhile; ?>
                                             </select>
                                             <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
                                         </div>
                                         <br />
                                         <div class="form-group">
-                                            <label for="cc-number" class="control-label mb-1">Upload Image</label>
-                                            <input type="file" id="file-input" name="image" class="form-control-file" />
-                                        </div>
+                                            <label for="cc-number" class="control-label mb-1">Upload Post Image</label>
+                                            <input type="file" id="file-input" name="image" class="form-control-file" required /> </div>
                                         <br />
                                         <div class="row">
                                             <div class="col col-md-12">
                                                 <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
                                             <div class="col-12 col-md-12">
-                                                <textarea name="post" id="textarea-input" rows="20" placeholder="Content..." class="form-control"></textarea>
+                                                <textarea name="post" id="textarea-input" rows="20" placeholder="Content..." class="form-control"><?= ((isset($post)) ? $post : '') ?></textarea>
                                             </div>
                                         </div>
                                         <div>

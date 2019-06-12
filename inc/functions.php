@@ -7,7 +7,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
 function redirect_to($new_location)
 {
     header('Location:' . $new_location);
-    //	exit();
+    exit();
 }
 
 function test_input($data)

@@ -1,13 +1,13 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/db.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/sessions.php';
-    require_once $_SERVER['DOCUMENT_ROOT'].'/cms/inc/functions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/db.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/sessions.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
 
-    confirm_login();
-    //dashboard table information
-    $viewQuery="SELECT * FROM admin_panel ORDER BY id desc ";
-    $execute=$conn->query($viewQuery);
-    $sno=0;
+confirm_login();
+//dashboard table information
+$viewQuery = "SELECT * FROM admin_panel ORDER BY id desc ";
+$execute = $conn->query($viewQuery);
+$sno = 0;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,11 +140,11 @@
                             <a class="js-arrow" href="comment.php">
                                 <i class="fas fa-comment"></i>Comments</a>
                             <?php
-                                    // counting unapproved comments
-                                    $queryUnapproved="SELECT * FROM comments WHERE `status`='OFF' ";
-                                    $executeQueryUnapproved=$conn->query($queryUnapproved);
-                                ?>
-                            <span class="inbox-num"><?=$rowUnapproved=mysqli_num_rows($executeQueryUnapproved);?></span>
+                            // counting unapproved comments
+                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
+                            $executeQueryUnapproved = $conn->query($queryUnapproved);
+                            ?>
+                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
                         </li> -->
                         <li>
                             <a href="logout.php">
@@ -176,7 +176,7 @@
                                             <img src="images/icon/peter.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
+                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -186,8 +186,8 @@
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
-                                                    <span class="email"><?=$_SESSION['email'];?></span>
+                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?= $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -224,7 +224,7 @@
                                     <?php
                                     echo Message();
                                     echo SuccessMessage();
-                                ?>
+                                    ?>
                                     <h2 class="title-1">overview</h2>
                                     <a href="manage_admin.php"><button class="au-btn au-btn-icon au-btn--blue2">
                                             <i class="zmdi zmdi-plus"></i>add user</button></a>
@@ -243,9 +243,9 @@
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                  $adminNo=$conn->query("SELECT * FROM admin_registration"); 
-                                                echo mysqli_num_rows($adminNo);
-                                                ?>
+                                                    $adminNo = $conn->query("SELECT * FROM admin_registration");
+                                                    echo mysqli_num_rows($adminNo);
+                                                    ?>
                                                 </h2>
                                                 <span>Number of Admins</span>
                                             </div>
@@ -266,9 +266,9 @@
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                  $postsNo=$conn->query("SELECT * FROM admin_panel"); 
-                                                echo mysqli_num_rows($postsNo);
-                                                ?>
+                                                    $postsNo = $conn->query("SELECT * FROM admin_panel");
+                                                    echo mysqli_num_rows($postsNo);
+                                                    ?>
                                                 </h2>
                                                 <span>Number of Posts</span>
                                             </div>
@@ -289,9 +289,9 @@
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                  $categoryNo=$conn->query("SELECT * FROM categories"); 
-                                                echo mysqli_num_rows($categoryNo);
-                                                ?>
+                                                    $categoryNo = $conn->query("SELECT * FROM categories");
+                                                    echo mysqli_num_rows($categoryNo);
+                                                    ?>
                                                 </h2>
                                                 <span>Number of Categories</span>
                                             </div>
@@ -312,9 +312,9 @@
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                  $commentsNo=$conn->query("SELECT * FROM comments"); 
-                                                echo mysqli_num_rows($commentsNo);
-                                                ?>
+                                                    $commentsNo = $conn->query("SELECT * FROM comments");
+                                                    echo mysqli_num_rows($commentsNo);
+                                                    ?>
                                                 </h2>
                                                 <span>Number of Comments</span>
                                             </div>
@@ -351,31 +351,31 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <?php while($t=mysqli_fetch_assoc($execute)): ?>
-                                            <tr class="tr-shadow">
-                                                <td><?=++$sno;?></td>
-                                                <td><?=$t['title'];?></td>
-                                                <td><?=$t['datetime'];?></td>
-                                                <td class="desc"><?=$t['author'];?></td>
-                                                <td><?=$t['category'];?></td>
-                                                <td>
-                                                    <span class="status--process"><img style="width:200px; height:10%;" src="/../unitedpicturesblog/<?=$t['image']; ?>" /></span>
-                                                </td>
-                                                
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a href="editpost.php?edit=<?=$t['id'];?>"><button class="btn-success">Edit</button></a>
-                                                        <a href="deletepost.php?delete=<?=$t['id'];?>"><button class="btn-danger">Delete</button></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a href="../fullpost.php?id=<?=$t['id'];?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
-                                            <?php endwhile;?>
+                                            <?php while ($t = mysqli_fetch_assoc($execute)) : ?>
+                                                <tr class="tr-shadow">
+                                                    <td><?= ++$sno; ?></td>
+                                                    <td><?= $t['title']; ?></td>
+                                                    <td><?= $t['datetime']; ?></td>
+                                                    <td class="desc"><?= $t['author']; ?></td>
+                                                    <td><?= $t['category']; ?></td>
+                                                    <td>
+                                                        <span class="status--process"><img style="width:200px; height:10%;" src="/../unitedpicturesblog/<?= $t['image']; ?>" /></span>
+                                                    </td>
+
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <a href="editpost.php?edit=<?= $t['id']; ?>"><button class="btn-success">Edit</button></a>
+                                                            <a href="deletepost.php?delete=<?= $t['id']; ?>"><button class="btn-danger">Delete</button></a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <a href="../fullpost.php?id=<?= $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
+                                            <?php endwhile; ?>
                                         </tbody>
                                     </table>
                                 </div>

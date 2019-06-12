@@ -7,7 +7,6 @@ confirm_login();
 
 if (isset($_POST['submitCategory'])) {
     $category = test_input($_POST['categoryName']);
-    date_default_timezone_set("Africa/Nairobi");
     $currentTime = time();
     $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
     $dateTime;
@@ -15,12 +14,10 @@ if (isset($_POST['submitCategory'])) {
     $admin_email = $_SESSION['email'];
     if (empty($category)) {
         $_SESSION['ErrorMessage'] = "Please enter a category. It can't be empty";
-        //redirect_to("categories.php");
     } elseif (strlen($category) > 99) {
         $_SESSION['ErrorMessage'] = "The name of the category you entered is too long";
-        //redirect_to("categories.php");
     } else {
-        $query = "INSERT INTO categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
+        $query = "INSERT INTO media_centre_categories(`datetime`,`name`,creatorname,email) VALUES('$dateTime','$category','$admin','$admin_email')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New category entered successfully";
     }
@@ -29,7 +26,7 @@ if (isset($_POST['submitCategory'])) {
 // Delete  category
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    $deleteQuery = "DELETE FROM categories WHERE id='$delete_id'";
+    $deleteQuery = "DELETE FROM media_centre_categories WHERE id='$delete_id'";
     $deleteQueryExecute = $conn->query($deleteQuery);
     if ($deleteQueryExecute) {
         $_SESSION['SuccessMessage'] = 'Category deleted successfully';
@@ -39,7 +36,7 @@ if (isset($_GET['delete'])) {
 }
 
 //Extracting category data
-$extract = "SELECT * FROM categories ORDER BY datetime desc";
+$extract = "SELECT * FROM media_centre_categories ORDER BY datetime desc";
 $run = $conn->query($extract);
 $SrNo = 0;
 ?>
@@ -129,11 +126,6 @@ $SrNo = 0;
                                 </li>
                             </ul>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>Comment</a>
-
-                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -169,16 +161,6 @@ $SrNo = 0;
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="comment.php">
-                                <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                            // counting unapproved comments
-                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
-                            $executeQueryUnapproved = $conn->query($queryUnapproved);
-                            ?>
-                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
-                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -197,16 +179,16 @@ $SrNo = 0;
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
-                                </button>
+                                </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
@@ -215,7 +197,7 @@ $SrNo = 0;
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
@@ -327,9 +309,9 @@ $SrNo = 0;
                                             </tbody>
                                         </table>
                                     </div>
-                                    <div class="user-data__footer">
+                                    <!-- <div class="user-data__footer">
                                         <button class="au-btn au-btn-load">load more</button>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <!-- END USER DATA-->
 
