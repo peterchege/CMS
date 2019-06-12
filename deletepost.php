@@ -5,20 +5,25 @@ require_once('inc/functions.php');
 
 confirm_login();
 
-$delete_id = $_GET['delete'];
-//adding new post
-if (isset($_POST['deletePost'])) {
-
-    $query = "DELETE FROM admin_panel WHERE id='$delete_id'";
-    $conn->query($query);
-    $_SESSION['SuccessMessage'] = "New post entered successfully";
-    echo "<script>alert('Post delete successfully');</script> ";
-    echo "<script>window.open('index.php','_SELF')</script>";
+if (!isset($_GET['delete']) || empty($_GET['delete'])) {
+    $_SESSION['Message'] = 'Invalid request.';
+    redirect_to('index.php');
+} else {
+    $delete_id = $_GET['delete'];
+    //adding new post
+    if (isset($_POST['deletePost'])) {
+        $query = "DELETE FROM media_centre_posts WHERE id='$delete_id'";
+        $delete = $conn->query($query);
+        if ($delete) {
+            $_SESSION['SuccessMessage'] = "Post deleted successfully.";
+            redirect_to('index.php');
+        } else {
+            $_SERVER['errorMessage'] = 'Post already deleted.';
+            redirect_to('index.php');
+        }
+    }
 }
 
-// extracting category data
-$queryCategory = "SELECT * from categories";
-$run = $conn->query($queryCategory);
 
 ?>
 <!DOCTYPE html>
@@ -33,7 +38,7 @@ $run = $conn->query($queryCategory);
     <meta name="keywords" content="" />
 
     <!-- Title Page-->
-    <title>Update Post</title>
+    <title>Delete Post</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
@@ -107,11 +112,6 @@ $run = $conn->query($queryCategory);
                                 </li>
                             </ul>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>Comment</a>
-
-                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -146,16 +146,6 @@ $run = $conn->query($queryCategory);
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="comment.php">
-                                <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                            // counting unapproved comments
-                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
-                            $executeQueryUnapproved = $conn->query($queryUnapproved);
-                            ?>
-                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
-                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -174,16 +164,16 @@ $run = $conn->query($queryCategory);
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
-                                <button class="au-btn--submit" type="submit">
-                                    <i class="zmdi zmdi-search"></i>
-                                </button>
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                    <button class="au-btn--submit" type="submit">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
@@ -192,7 +182,7 @@ $run = $conn->query($queryCategory);
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
@@ -232,7 +222,7 @@ $run = $conn->query($queryCategory);
 
                                 <div class="card-body">
                                     <div class="card-title">
-                                        <h3 class="text-center title-2">CREATE POST</h3>
+                                        <h3 class="text-center title-2">Delete Post</h3>
                                         <?php
                                         echo Message();
                                         echo SuccessMessage();
@@ -242,7 +232,7 @@ $run = $conn->query($queryCategory);
                                     <!-- Getting info based on edit id -->
                                     <?php
                                     $delete_id = $_GET['delete'];
-                                    $searchQuery = "SELECT * FROM admin_panel where id='$delete_id' ";
+                                    $searchQuery = "SELECT * FROM media_centre_posts where id='$delete_id' ";
                                     $runn = $conn->query($searchQuery);
                                     ?>
                                     <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
@@ -251,10 +241,15 @@ $run = $conn->query($queryCategory);
                                                 <label for="cc-payment" class="control-label mb-1">Title</label>
                                                 <input id="cc-pament" name="title" value="<?= $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                             </div>
-                                            <<<<<<< HEAD <div class="form-group has-success">
+                                            <div class="form-group has-success">
                                                 <label for="cc-name" class="control-label mb-1">Category</label>
                                                 <select name="category" id="select" class="form-control">
                                                     <option disabled selected value="0">Please select</option>
+                                                    <?php
+                                                    // extracting category data
+                                                    $queryCategory = "SELECT * from media_centre_categories";
+                                                    $run = $conn->query($queryCategory);
+                                                    ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
                                                         <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
                                                             <?= $c['name']; ?>
@@ -262,21 +257,14 @@ $run = $conn->query($queryCategory);
                                                     <?php endwhile; ?>
                                                 </select>
                                                 <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
-                                                =======
-                                                <div class="col-12 col-md-12">
-                                                    <textarea name="post" id="textarea-input" rows="12" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
-                                                    >>>>>>> 85c169ce59051107ab57afce198d7a4913a13b7b
-                                                </div>
+
+
                                                 <br />
                                                 <div class="form-group">
                                                     <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                                    <img src="../<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
+                                                    <img src="<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
                                                 </div>
                                                 <br />
-                                                <div class="form-group">
-                                                    <label for="cc-number" class="control-label mb-1">Upload Image</label>
-                                                    <input type="file" id="file-input" name="image" class="form-control-file" value="../<?= $e['image']; ?>" />
-                                                </div>
                                                 <br />
                                                 <div class="row">
                                                     <div class="col col-md-12">

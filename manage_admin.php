@@ -1,58 +1,55 @@
 <?php
-    require_once('inc/db.php');
-    require_once('inc/sessions.php');
-    require_once('inc/functions.php');
-    
+require_once('inc/db.php');
+require_once('inc/sessions.php');
+require_once('inc/functions.php');
 
-    confirm_login();
-    if(isset($_POST['submitNewAdmin'])){
-        $username=test_input($_POST['username']);
-        $password=test_input($_POST['password']);
-        $email=test_input($_POST['email']);
-        $confirm_password=test_input($_POST['confirm_password']);
-        date_default_timezone_set("Africa/Nairobi");
-        $currentTime=time();
-        $dateTime=strftime("%d, %B %Y %H:%M:%S",$currentTime);
-        $dateTime;
-        $admin=$_SESSION['username'];
 
-        //checking if admin already exists
-        $adminQuery="SELECT * FROM admin_registration WHERE username='$username'";
-        $adminQueryExecute=$conn->query($adminQuery);
+confirm_login();
+if (isset($_POST['submitNewAdmin'])) {
+    $username = test_input($_POST['username']);
+    $password = test_input($_POST['password']);
+    $email = test_input($_POST['email']);
+    $confirm_password = test_input($_POST['confirm_password']);
+    $currentTime = time();
+    $dateTime = strftime("%d, %B %Y %H:%M:%S", $currentTime);
+    $dateTime;
+    $admin = $_SESSION['username'];
 
-        if(empty($username) || empty($password) || empty($confirm_password)){
-            $_SESSION['ErrorMessage']="All fields required";
-            //redirect_to("categories.php");
-        }elseif(strlen($username)<4){
-            $_SESSION['ErrorMessage']="The name of the admin you entered is too short. At least 4 characters required";
-            //redirect_to("categories.php");
-        }elseif(mysqli_num_rows($adminQueryExecute)>0){
-            $_SESSION['ErrorMessage']="The name of the admin already exists. Choose another name";
-            //redirect_to("categories.php");
-        }elseif($password!==$confirm_password){
-            $_SESSION['ErrorMessage']="The passwords don't match";
-        }else{
-            $password=md5($password);
-            $confirm_password=md5($confirm_password);
-            $query="INSERT INTO admin_registration(`datetime`, `username`,`password`,email,`added by`) VALUES('$dateTime','$username','$confirm_password','$email','$admin')";
-            $conn->query($query);
-            $_SESSION['SuccessMessage']="New admin entered successfully";
-        }
+    //checking if admin already exists
+    $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE username='$username'";
+    $adminQueryExecute = $conn->query($adminQuery);
+
+    if (empty($username) || empty($password) || empty($confirm_password)) {
+        $_SESSION['ErrorMessage'] = "All fields required.";
+    } elseif (strlen($username) < 4) {
+        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required.";
+        //redirect_to("categories.php");
+    } elseif (mysqli_num_rows($adminQueryExecute) > 0) {
+        $_SESSION['ErrorMessage'] = "The name of the admin already exists. Choose another name.";
+    } elseif ($password !== $confirm_password) {
+        $_SESSION['ErrorMessage'] = "The passwords don't match.";
+    } else {
+        $password = md5($password);
+        $confirm_password = md5($confirm_password);
+        $query = "INSERT INTO media_centre_admin_registration(`datetime`, `username`,`password`,email,`added by`) VALUES('$dateTime','$username','$confirm_password','$email','$admin')";
+        $conn->query($query);
+        $_SESSION['SuccessMessage'] = "New admin entered successfully";
     }
+}
 
-    // Delete admin
-    if(isset($_GET['delete'])){
-        $delete_id=$_GET['delete'];
-        $delete_id=htmlentities($delete_id);        
-        $deleteQuery="DELETE FROM admin_registration WHERE id='$delete_id'";            
-        $deleteQueryExecute=$conn->query($deleteQuery);
-        
-        if($deleteQueryExecute){
-            $_SESSION['SuccessMessage']='Admin deleted successfully';
-        }else{
-            $_SESSION['Message']='Something went terribly wrong. Please try again';
-        }
+// Delete admin
+if (isset($_GET['delete'])) {
+    $delete_id = $_GET['delete'];
+    $delete_id = htmlentities($delete_id);
+    $deleteQuery = "DELETE FROM media_centre_admin_registration WHERE id='$delete_id'";
+    $deleteQueryExecute = $conn->query($deleteQuery);
+
+    if ($deleteQueryExecute) {
+        $_SESSION['SuccessMessage'] = 'Admin deleted successfully';
+    } else {
+        $_SESSION['Message'] = 'Something went terribly wrong. Please try again';
     }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -161,7 +158,7 @@
             <div class="menu-sidebar__content js-scrollbar1">
                 <nav class="navbar-sidebar">
                     <ul class="list-unstyled navbar__list">
-                        <li >
+                        <li>
                             <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
                         </li>
@@ -198,30 +195,30 @@
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
-                                </button>
+                                </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?=$_SESSION['username'];?></a>
+                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?=$_SESSION['username'];?></a></h5>
-                                                    <span class="email"><?=$_SESSION['email'];?></span>
+                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?= $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -258,8 +255,8 @@
                                 <div class="card-body card-block">
                                     <form action="" method="post" class="new-user">
                                         <?php
-                                            echo Message();
-                                            echo SuccessMessage();
+                                        echo Message();
+                                        echo SuccessMessage();
                                         ?>
                                         <div class="form-group">
                                             <label class="control-label mb-1 labd">Username</label><br>
@@ -267,7 +264,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-user"></i>
                                                 </div>
-                                                <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<?= ((isset($username))?$username:''); ?>">
+                                                <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<?= ((isset($username)) ? $username : ''); ?>">
                                             </div>
                                         </div>
 
@@ -277,7 +274,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </div>
-                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?= ((isset($email))?$email:''); ?>">
+                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?= ((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
 
@@ -287,7 +284,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-asterisk"></i>
                                                 </div>
-                                                <input type="password" id="password" name="password" placeholder="Password" class="form-control" value="<?= ((isset($password))?$password:''); ?>">
+                                                <input type="password" id="password" name="password" placeholder="Password" class="form-control" value="<?= ((isset($password)) ? $password : ''); ?>">
                                             </div>
                                         </div>
 
@@ -297,7 +294,7 @@
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-asterisk"></i>
                                                 </div>
-                                                <input type="password" id="password" name="confirm_password" placeholder="Retype same password" class="form-control" value="<?= ((isset($confirm_password))?$confirm_password:''); ?>">
+                                                <input type="password" id="password" name="confirm_password" placeholder="Retype same password" class="form-control" value="<?= ((isset($confirm_password)) ? $confirm_password : ''); ?>">
                                             </div>
                                         </div><br>
 
@@ -325,8 +322,8 @@
                                         <thead>
                                             <tr>
                                                 <td>Sr No.</td>
-                                                <td>Date & Time</td>
-                                                <td>Admin Name</td>
+                                                <td>Date & Time Added</td>
+                                                <td>Admin Credentials</td>
                                                 <td>Added by</td>
                                                 <td>Action</td>
                                                 <td></td>
@@ -335,36 +332,36 @@
                                         <tbody>
                                             <?php
                                             //Extracting admin data
-                                             $extract="SELECT * FROM admin_registration ORDER BY datetime desc";
-                                             $run=$conn->query($extract);
-                                             $SrNo=0;
+                                            $extract = "SELECT * FROM media_centre_admin_registration ORDER BY datetime desc";
+                                            $run = $conn->query($extract);
+                                            $SrNo = 0;
                                             ?>
-                                            <?php while($a=mysqli_fetch_assoc($run)):  ?>
-                                            <tr>
-                                                
-                                                <td>
-                                                    <?= ++$SrNo; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $a['datetime']; ?>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data__info">
-                                                        <h6><?= $a['username']; ?></h6>
-                                                        <span>
-                                                            <a><?= $a['email']; ?></a>
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <?= $a['added by']; ?>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature1">
-                                                        <a href="manage_admin.php?delete=<?=$a['id']; ?>"><button class="btn-danger"><i class="fas fa-ban"></i> Delete</button></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <?php while ($a = mysqli_fetch_assoc($run)) :  ?>
+                                                <tr>
+
+                                                    <td>
+                                                        <?= ++$SrNo; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $a['datetime']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data__info">
+                                                            <h6><?= $a['username']; ?></h6>
+                                                            <span>
+                                                                <a><?= $a['email']; ?></a>
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <?= $a['added by']; ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data-feature1">
+                                                            <a href="manage_admin.php?delete=<?= $a['id']; ?>"><button class="btn-danger"><i class="fas fa-ban"></i> Delete</button></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
                                             <?php endwhile; ?>
                                         </tbody>
                                     </table>

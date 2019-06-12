@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
                         window.open('index.php', '_SELF');
                         </script>";
         } else {
-            $_SESSION['ErrorMessage'] = "Email or password doesn't match database records. Please Try again.";
+            $_SESSION['ErrorMessage'] = "Email or password doesn't match our database records. Please Try again.";
         }
     }
 }

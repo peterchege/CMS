@@ -22,7 +22,7 @@ function test_input($data)
 function login_attempt($usernameEmail, $password)
 {
     global $conn;
-    $query = "SELECT * FROM admin_registration WHERE username='$usernameEmail' AND password='$password' OR email='$usernameEmail' ";
+    $query = "SELECT * FROM media_centre_admin_registration WHERE username='$usernameEmail' AND password='$password' OR email='$usernameEmail' ";
     $queryExecute = $conn->query($query);
     if ($admin = mysqli_fetch_assoc($queryExecute)) {
         return $admin;

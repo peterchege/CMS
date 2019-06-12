@@ -23,22 +23,22 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
     $photoName = md5($photoName);
     $photoExt = $photoFullnameExploded[1];
     $fullPhotoName = $photoName . '.' . $photoExt;
-    $photoUploadPath = 'images/';
+    $photoUploadPath = 'images/posts/';
     $tmp_loc = $_FILES['image']['tmp_name'];
 
 
-    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/" . $fullPhotoName;
+    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
     $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
 
     if (empty($title) || empty($category)) {
-        $_SESSION['ErrorMessage'] = "Title and Category can't be empty";
+        $_SESSION['ErrorMessage'] = "Title and Category can't be empty.";
     } elseif (strlen($title) < 2) {
-        $_SESSION['ErrorMessage'] = "Title should be at least two characters";
+        $_SESSION['ErrorMessage'] = "Title should be at least two characters.";
     } else {
         move_uploaded_file($tmp_loc, $target);
         $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
         $conn->query($query);
-        $_SESSION['SuccessMessage'] = "New post entered successfully";
+        $_SESSION['SuccessMessage'] = "New post entered successfully.";
     }
 }
 
@@ -246,7 +246,7 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
 
                                 <div class="card-body">
                                     <div class="card-title">
-                                        <h3 class="text-center title-2">CREATE POST</h3>
+                                        <h3 class="text-center title-2">Create Post</h3>
                                         <?php
                                         echo Message();
                                         echo SuccessMessage();
@@ -260,7 +260,7 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                                         </div>
                                         <div class="form-group has-success">
                                             <label for="cc-name" class="control-label mb-1">Category</label>
-                                            <select name="category" id="select" class="form-control">
+                                            <select name="category" id="select" class="form-control" required>
                                                 <option disabled selected value="0">Please select</option>
                                                 <?php
                                                 //Extracting category data

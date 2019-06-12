@@ -5,7 +5,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
 
 confirm_login();
 //dashboard table information
-$viewQuery = "SELECT * FROM admin_panel ORDER BY id desc ";
+$viewQuery = "SELECT * FROM media_centre_posts ORDER BY id desc ";
 $execute = $conn->query($viewQuery);
 $sno = 0;
 ?>
@@ -136,16 +136,6 @@ $sno = 0;
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="comment.php">
-                                <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                            // counting unapproved comments
-                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
-                            $executeQueryUnapproved = $conn->query($queryUnapproved);
-                            ?>
-                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
-                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -164,16 +154,16 @@ $sno = 0;
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
-                                </button>
+                                </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
@@ -182,7 +172,7 @@ $sno = 0;
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
@@ -243,7 +233,7 @@ $sno = 0;
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                    $adminNo = $conn->query("SELECT * FROM admin_registration");
+                                                    $adminNo = $conn->query("SELECT * FROM media_centre_admin_registration");
                                                     echo mysqli_num_rows($adminNo);
                                                     ?>
                                                 </h2>
@@ -266,7 +256,7 @@ $sno = 0;
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                    $postsNo = $conn->query("SELECT * FROM admin_panel");
+                                                    $postsNo = $conn->query("SELECT * FROM media_centre_posts");
                                                     echo mysqli_num_rows($postsNo);
                                                     ?>
                                                 </h2>
@@ -289,7 +279,7 @@ $sno = 0;
                                             <div class="text">
                                                 <h2>
                                                     <?php
-                                                    $categoryNo = $conn->query("SELECT * FROM categories");
+                                                    $categoryNo = $conn->query("SELECT * FROM media_centre_categories");
                                                     echo mysqli_num_rows($categoryNo);
                                                     ?>
                                                 </h2>
@@ -302,29 +292,6 @@ $sno = 0;
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="col-sm-6 col-lg-3">
-                                <div class="overview-item overview-item--c4">
-                                    <div class="overview__inner">
-                                        <div class="overview-box clearfix">
-                                            <div class="icon">
-                                                <i class="zmdi zmdi-comment"></i>
-                                            </div>
-                                            <div class="text">
-                                                <h2>
-                                                    <?php
-                                                    $commentsNo = $conn->query("SELECT * FROM comments");
-                                                    echo mysqli_num_rows($commentsNo);
-                                                    ?>
-                                                </h2>
-                                                <span>Number of Comments</span>
-                                            </div>
-                                        </div>
-                                        <div class="overview-chart">
-                                            <canvas id="widgetChart4"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> -->
                         </div>
 
                         <div class="row">
@@ -333,7 +300,7 @@ $sno = 0;
                                 <h3 class="title-5 m-b-35">Posts table</h3>
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-right">
-                                        <a href="/unitedpicturesblog/admin/newpost.php"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
+                                        <a href="<?= 'newpost.php'; ?>"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
                                     </div>
                                 </div>
                                 <div class="table-responsive table-responsive-data2">
@@ -359,7 +326,7 @@ $sno = 0;
                                                     <td class="desc"><?= $t['author']; ?></td>
                                                     <td><?= $t['category']; ?></td>
                                                     <td>
-                                                        <span class="status--process"><img style="width:200px; height:10%;" src="/../unitedpicturesblog/<?= $t['image']; ?>" /></span>
+                                                        <span class="status--process"><img style="width:200px; height:10%;" src="/../cms/<?= $t['image']; ?>" /></span>
                                                     </td>
 
                                                     <td>

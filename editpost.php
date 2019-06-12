@@ -39,7 +39,7 @@ if (isset($_POST['submitEditedPost'])) {
         //redirect_to("categories.php");
     } else {
         move_uploaded_file($tmp_loc, $target);
-        $query = "UPDATE admin_panel SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
+        $query = "UPDATE media_centre_posts SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New post entered successfully";
         echo "<script>alert('Post updated successfully');</script> ";
@@ -47,9 +47,7 @@ if (isset($_POST['submitEditedPost'])) {
     }
 }
 
-// extracting category data
-$queryCategory = "SELECT * from categories";
-$run = $conn->query($queryCategory);
+
 
 ?>
 <!DOCTYPE html>
@@ -64,7 +62,7 @@ $run = $conn->query($queryCategory);
     <meta name="keywords" content="" />
 
     <!-- Title Page-->
-    <title>Update Post</title>
+    <title>Edit Post</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
@@ -205,16 +203,16 @@ $run = $conn->query($queryCategory);
                     <div class="container-fluid">
                         <div class="header-wrap">
                             <form class="form-header" action="" method="POST">
-                                <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
+                                <!-- <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
-                                </button>
+                                </button> -->
                             </form>
                             <div class="header-button">
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/icon/peter.jpg" alt="John Doe" />
+                                            <img src="images/apa_insurance_image_facebook.png " alt="<?= $_SESSION['username']; ?>" />
                                         </div>
                                         <div class="content">
                                             <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
@@ -223,7 +221,7 @@ $run = $conn->query($queryCategory);
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/icon/peter.jpg" alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="<?= $_SESSION['username']; ?>" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
@@ -263,7 +261,7 @@ $run = $conn->query($queryCategory);
 
                                 <div class="card-body">
                                     <div class="card-title">
-                                        <h3 class="text-center title-2">CREATE POST</h3>
+                                        <h3 class="text-center title-2">Edit Post</h3>
                                         <?php
                                         echo Message();
                                         echo SuccessMessage();
@@ -273,7 +271,7 @@ $run = $conn->query($queryCategory);
                                     <!-- Getting info based on edit id -->
                                     <?php
                                     $edit_id = $_GET['edit'];
-                                    $searchQuery = "SELECT * FROM admin_panel where id='$edit_id' ";
+                                    $searchQuery = "SELECT * FROM media_centre_posts where id='$edit_id' ";
                                     $runn = $conn->query($searchQuery);
                                     ?>
                                     <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
@@ -286,6 +284,11 @@ $run = $conn->query($queryCategory);
                                                 <label for="cc-name" class="control-label mb-1">Category</label>
                                                 <select name="category" id="select" class="form-control">
                                                     <option disabled selected value="0">Please select</option>
+                                                    <?php
+                                                    // extracting category data
+                                                    $queryCategory = "SELECT * from media_centre_categories";
+                                                    $run = $conn->query($queryCategory);
+                                                    ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
                                                         <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
                                                             <?= $c['name']; ?>
@@ -297,7 +300,7 @@ $run = $conn->query($queryCategory);
                                             <br />
                                             <div class="form-group">
                                                 <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                                <img src="../<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
+                                                <img src="<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
                                             </div>
                                             <br />
                                             <div class="form-group">
