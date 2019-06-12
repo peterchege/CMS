@@ -76,12 +76,17 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
     <link href="vendor/slick/slick.css" rel="stylesheet" media="all" />
     <link href="vendor/select2/select2.min.css" rel="stylesheet" media="all" />
     <link href="vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all" />
-
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all" />
+
+    <!-- ckeditor -->
+    <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script>
+
+    <style></style>
+
 </head>
 
-<body class="animsition">
+<body class="">
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -131,11 +136,6 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                                 </li>
                             </ul>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="#">
-                                <i class="fas fa-desktop"></i>Comment</a>
-
-                        </li> -->
                     </ul>
                 </div>
             </nav>
@@ -243,7 +243,6 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
                             <div class="card">
-
                                 <div class="card-body">
                                     <div class="card-title">
                                         <h3 class="text-center title-2">Create Post</h3>
@@ -286,7 +285,7 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                                                 <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
                                             <div class="col-12 col-md-12">
-                                                <textarea name="post" id="textarea-input" rows="20" placeholder="Content..." class="form-control"><?= ((isset($post)) ? $post : '') ?></textarea>
+                                                <textarea name="post" id="content" rows="20" placeholder="Content..." class="form-control ckeditor"><?= ((isset($post)) ? $post : '') ?></textarea>
                                             </div>
                                         </div>
                                         <div>
@@ -323,10 +322,19 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
     <script src="vendor/circle-progress/circle-progress.min.js"></script>
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="vendor/select2/select2.min.js"></script>
+    <!-- <script src="vendor/select2/select2.min.js"></script> -->
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
+    <!-- ckeditor -->
+    <script>
+        CKEDITOR.replace( 'content', {
+  height: 300,
+  filebrowserUploadUrl: "upload.php"
+ });
+    </script>
+
 </body>
 
 </html>
