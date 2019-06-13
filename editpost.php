@@ -24,7 +24,7 @@ if (isset($_POST['submitEditedPost'])) {
     $photoName = md5($photoName);
     $photoExt = $photoFullnameExploded[1];
     $fullPhotoName = $photoName . '.' . $photoExt;
-    $photoUploadPath = 'images/';
+    $photoUploadPath = 'images/posts/';
     $tmp_loc = $_FILES['image']['tmp_name'];
 
 
@@ -84,9 +84,14 @@ if (isset($_POST['submitEditedPost'])) {
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all" />
+
+    <!-- ckeditor -->
+    <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script>
 </head>
 
-<body class="animsition">
+<!-- insert animsition class to body element for effects -->
+
+<body class="">
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">
@@ -175,16 +180,6 @@ if (isset($_POST['submitEditedPost'])) {
                             <a class="js-arrow" href="manage_admin.php">
                                 <i class="far fa-user"></i>Manage Admin</a>
                         </li>
-                        <!-- <li class="has-sub">
-                            <a class="js-arrow" href="comment.php">
-                                <i class="fas fa-comment"></i>Comments</a>
-                            <?php
-                            // counting unapproved comments
-                            $queryUnapproved = "SELECT * FROM comments WHERE `status`='OFF' ";
-                            $executeQueryUnapproved = $conn->query($queryUnapproved);
-                            ?>
-                            <span class="inbox-num"><?= $rowUnapproved = mysqli_num_rows($executeQueryUnapproved); ?></span>
-                        </li> -->
                         <li>
                             <a href="logout.php">
                                 <i class="zmdi zmdi-power"></i>Log Out</a>
@@ -313,7 +308,7 @@ if (isset($_POST['submitEditedPost'])) {
                                                     <label for="textarea-input" class=" form-control-label">Post</label>
                                                 </div>
                                                 <div class="col-12 col-md-12">
-                                                    <textarea name="post" id="textarea-input" rows="12" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
+                                                    <textarea name="post" id="content" rows="12" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
                                                 </div>
                                             </div>
                                             <div>
@@ -354,6 +349,14 @@ if (isset($_POST['submitEditedPost'])) {
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
+    <!-- ckeditor -->
+    <script>
+        CKEDITOR.replace('content', {
+            height: 300,
+            filebrowserUploadUrl: "upload.php"
+        });
+    </script>
 </body>
 
 </html>

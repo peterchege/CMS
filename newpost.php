@@ -268,7 +268,7 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                                                 $SrNo = 0;
                                                 ?>
                                                 <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                    <option <?php ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
+                                                    <option <?= ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
                                                         <?= $c['name']; ?>
                                                     </option>
                                                 <?php endwhile; ?>
@@ -329,10 +329,10 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
 
     <!-- ckeditor -->
     <script>
-        CKEDITOR.replace( 'content', {
-  height: 300,
-  filebrowserUploadUrl: "upload.php"
- });
+        CKEDITOR.replace('content', {
+            height: 300,
+            filebrowserUploadUrl: "upload.php"
+        });
     </script>
 
 </body>
