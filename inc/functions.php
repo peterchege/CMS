@@ -10,12 +10,32 @@ function redirect_to($new_location)
     exit();
 }
 
+//security.
+function sanitize($dirty)
+{
+    $dirty = trim($dirty);
+    // $dirty = stripslashes($dirty);
+    // $dirty = htmlspecialchars($dirty);
+    return htmlentities($dirty, ENT_QUOTES, "UTF-8");
+}
+
+
+function desanitize($clean)
+{
+    return html_entity_decode($clean);
+}
+
 function test_input($data)
 {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
+}
+
+function test_output($data)
+{
+    $data = htmlspecialchars_decode($data);
 }
 
 //login function

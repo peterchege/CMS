@@ -9,7 +9,7 @@ confirm_login();
 if (isset($_POST['submitPost']) && !empty($_FILES)) {
     $title = test_input($_POST['title']);
     $category = test_input($_POST['category']);
-    $post = test_input($_POST['post']);
+    $post = sanitize($_POST['post']);
 
     $currentTime = time();
     $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);

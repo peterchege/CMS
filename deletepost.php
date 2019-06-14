@@ -60,6 +60,9 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
 
     <!-- Main CSS-->
     <link href="css/theme.css" rel="stylesheet" media="all" />
+
+    <!-- ckeditor -->
+    <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script>
 </head>
 
 <body class="animsition">
@@ -271,7 +274,7 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                                         <label for="textarea-input" class=" form-control-label">Post</label>
                                                     </div>
                                                     <div class="col-12 col-md-12">
-                                                        <textarea name="post" id="textarea-input" rows="9" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
+                                                        <textarea name="post" id="content" rows="9" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -312,6 +315,14 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+
+    <!-- ckeditor -->
+    <script>
+        CKEDITOR.replace('content', {
+            height: 300,
+            filebrowserUploadUrl: "upload.php"
+        });
+    </script>
 </body>
 
 </html>
