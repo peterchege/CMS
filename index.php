@@ -337,7 +337,7 @@ $sno = 0;
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <a href="../fullpost.php?id=<?= $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                            <a href="" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
                                                         </div>
                                                     </td>
                                                 </tr>
