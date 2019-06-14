@@ -10,8 +10,11 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
     redirect_to('index.php');
 } else {
     $delete_id = $_GET['delete'];
-    //adding new post
+    //Delete selected post
     if (isset($_POST['deletePost'])) {
+        $deleteImage = $conn->query("SELECT * FROM media_centre_posts WHERE id = '$delete_id' ");
+        $deleteImage = mysqli_fetch_assoc($deleteImage);
+        unlink($deleteImage['image']);
         $query = "DELETE FROM media_centre_posts WHERE id='$delete_id'";
         $delete = $conn->query($query);
         if ($delete) {
@@ -260,8 +263,6 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                                     <?php endwhile; ?>
                                                 </select>
                                                 <span class="help-block field-validation-valid" data-valmsg-for="cc-name" data-valmsg-replace="true"></span>
-
-
                                                 <br />
                                                 <div class="form-group">
                                                     <label for="cc-number" class="control-label mb-1">Existing Image</label>
