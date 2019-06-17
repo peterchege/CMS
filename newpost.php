@@ -34,6 +34,8 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
         $_SESSION['ErrorMessage'] = "Title and Category can't be empty.";
     } elseif (strlen($title) < 2) {
         $_SESSION['ErrorMessage'] = "Title should be at least two characters.";
+    } elseif (empty($photoFullname)) {
+        $_SESSION['ErrorMessage'] = "Please select a valid image.";
     } else {
         move_uploaded_file($tmp_loc, $target);
         $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
