@@ -68,21 +68,21 @@ $sno = 0;
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
 
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="newpost.php">
                                 <i class="fas fa-chart-bar"></i>New Post</a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="categories.php">
                                 <i class="fas fa-table"></i>Categories</a>
                         </li>
 
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="manage_admin.php">
                                 <i class="fas fa-copy"></i>Manage Admin</a>
                             <ul class="navbar-mobile-sub__list list-unstyled js-sub-list">
                                 <li>
@@ -337,7 +337,7 @@ $sno = 0;
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <a href="" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                            <a href="<?= 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
                                                         </div>
                                                     </td>
                                                 </tr>

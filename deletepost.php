@@ -68,7 +68,7 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
     <script src="http://cdn.ckeditor.com/4.6.2/standard-all/ckeditor.js"></script>
 </head>
 
-<body class="animsition">
+<body class="">
     <div class="page-wrapper">
         <!-- HEADER MOBILE-->
         <header class="header-mobile d-block d-lg-none">

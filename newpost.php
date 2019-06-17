@@ -6,18 +6,20 @@ require_once('inc/functions.php');
 confirm_login();
 
 //adding new post
-if (isset($_POST['submitPost']) && !empty($_FILES)) {
+if (isset($_POST['submitPost'])) {
     $title = test_input($_POST['title']);
+    $title = strtoupper($title);
     $category = test_input($_POST['category']);
     $post = sanitize($_POST['post']);
 
     $currentTime = time();
     $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
     $dateTime;
-    $admin = $_SESSION['username'];
+    $admin = ucfirst($_SESSION['username']);
 
     //image validation
     $photoFullname = $_FILES['image']['name'];
+    $filetype = $_FILES['image']['type'];
     $photoFullnameExploded = explode('.', $photoFullname);
     $photoName = $photoFullnameExploded[0];
     $photoName = md5($photoName);
@@ -36,16 +38,16 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
         $_SESSION['ErrorMessage'] = "Title should be at least two characters.";
     } elseif (empty($photoFullname)) {
         $_SESSION['ErrorMessage'] = "Please select a valid image.";
+    } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
+        $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
     } else {
         move_uploaded_file($tmp_loc, $target);
         $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New post entered successfully.";
+        redirect_to('index.php');
     }
 }
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -110,7 +112,7 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                 <div class="container-fluid">
                     <ul class="navbar-mobile__list list-unstyled">
                         <li class="has-sub">
-                            <a class="js-arrow" href="#">
+                            <a class="js-arrow" href="index.php">
                                 <i class="fas fa-tachometer-alt"></i>Dashboard</a>
 
                         </li>
@@ -156,7 +158,8 @@ if (isset($_POST['submitPost']) && !empty($_FILES)) {
                     <ul class="list-unstyled navbar__list">
                         <li>
                             <a class="js-arrow" href="index.php">
-                                <i class="fas fa-tachometer-alt"></i>Dashboard</a>
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
                         </li>
 
                         <li class="active has-sub">

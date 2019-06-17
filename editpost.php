@@ -1,13 +1,29 @@
 <?php
+ob_start();
 require_once('inc/db.php');
 require_once('inc/sessions.php');
 require_once('inc/functions.php');
 
 confirm_login();
 
-//adding new post
+if (!isset($_GET['edit'])) {
+    redirect_to('index.php');
+} else {
+    if (empty($_GET['edit'])) {
+        redirect_to('index.php');
+    } else {
+        $edit_id = $_GET['edit'];
+        $_SESSION['edit_id'] = $edit_id;
+        $searchQuery = "SELECT * FROM media_centre_posts where id='$edit_id' ";
+        $runn = $conn->query($searchQuery);
+    }
+}
+
+
+//editing post
 if (isset($_POST['submitEditedPost'])) {
     $title = test_input($_POST['title']);
+    $title = strtoupper($title);
     $category = test_input($_POST['category']);
     $post = test_input($_POST['post']);
     $edit_id = $_GET['edit'];
@@ -15,20 +31,24 @@ if (isset($_POST['submitEditedPost'])) {
     $currentTime = time();
     $dateTime = strftime("%d,%B %Y %H:%M:%S", $currentTime);
     $dateTime;
-    $admin = $_SESSION['username'];
+    $admin = ucfirst($_SESSION['username']);
+
 
     //image validation
     $photoFullname = $_FILES['image']['name'];
+    $filetype = $_FILES['image']['type'];
     $photoFullnameExploded = explode('.', $photoFullname);
     $photoName = $photoFullnameExploded[0];
     $photoName = md5($photoName);
+    $photoName = $_SESSION['edit_id'] . $photoName;
     $photoExt = $photoFullnameExploded[1];
     $fullPhotoName = $photoName . '.' . $photoExt;
     $photoUploadPath = 'images/posts/';
+    $edit_id_for_image = mysqli_fetch_assoc($runn);
     $tmp_loc = $_FILES['image']['tmp_name'];
 
 
-    $target = $_SERVER['DOCUMENT_ROOT'] . "/unitedpicturesblog/images/" . $fullPhotoName;
+    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
     $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
 
     if (empty($title) || empty($category)) {
@@ -37,11 +57,16 @@ if (isset($_POST['submitEditedPost'])) {
     } elseif (strlen($title) < 2) {
         $_SESSION['ErrorMessage'] = "Title should be at least two characters";
         //redirect_to("categories.php");
+    } elseif (empty($photoFullname)) {
+        $_SESSION['ErrorMessage'] = "Please select a valid image.";
+    } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
+        $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
     } else {
         move_uploaded_file($tmp_loc, $target);
         $query = "UPDATE media_centre_posts SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
         $conn->query($query);
-        $_SESSION['SuccessMessage'] = "New post entered successfully";
+        $_SESSION['SuccessMessage'] = "Post updated successfully";
+        unset($_SESSION['edit_id']);
         echo "<script>alert('Post updated successfully');</script> ";
         echo "<script>window.open('index.php','_SELF')</script>";
     }
@@ -264,11 +289,6 @@ if (isset($_POST['submitEditedPost'])) {
                                     </div>
                                     <hr />
                                     <!-- Getting info based on edit id -->
-                                    <?php
-                                    $edit_id = $_GET['edit'];
-                                    $searchQuery = "SELECT * FROM media_centre_posts where id='$edit_id' ";
-                                    $runn = $conn->query($searchQuery);
-                                    ?>
                                     <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
                                         <form action="editpost.php?edit=<?= $edit_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                             <div class="form-group">
