@@ -53,12 +53,15 @@ function test_output($data)
 function login_attempt($usernameEmail, $password)
 {
     global $conn;
-    $query = "SELECT * FROM media_centre_admin_registration WHERE username='$usernameEmail' AND password='$password' OR email='$usernameEmail' ";
+    $query = "SELECT * FROM media_centre_admin_registration WHERE email='$usernameEmail'";
     $queryExecute = $conn->query($query);
     if ($admin = mysqli_fetch_assoc($queryExecute)) {
-        return $admin;
-    } else {
-        return null;
+        $pwdCheck = password_verify($password, $admin['password']);
+        if ($pwdCheck == true) {
+            return $admin;
+        } else {
+            return null;
+        }
     }
 }
 

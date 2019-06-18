@@ -16,7 +16,7 @@ if (isset($_POST['submitNewAdmin'])) {
     $admin = $_SESSION['username'];
 
     //checking if admin already exists
-    $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE username='$username'";
+    $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE username='$username' or email = '$email'";
     $adminQueryExecute = $conn->query($adminQuery);
 
     if (empty($username) || empty($password) || empty($confirm_password)) {
@@ -25,12 +25,12 @@ if (isset($_POST['submitNewAdmin'])) {
         $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required.";
         //redirect_to("categories.php");
     } elseif (mysqli_num_rows($adminQueryExecute) > 0) {
-        $_SESSION['ErrorMessage'] = "The name of the admin already exists. Choose another name.";
+        $_SESSION['ErrorMessage'] = "The name of the admin or email already exists. Choose another name.";
     } elseif ($password !== $confirm_password) {
         $_SESSION['ErrorMessage'] = "The passwords don't match.";
     } else {
-        $password = md5($password);
-        $confirm_password = md5($confirm_password);
+        $password = password_hash($password, PASSWORD_DEFAULT);
+        $confirm_password = password_hash($confirm_password, PASSWORD_DEFAULT);
         $query = "INSERT INTO media_centre_admin_registration(`datetime`, `username`,`password`,email,`added by`) VALUES('$dateTime','$username','$confirm_password','$email','$admin')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New admin entered successfully";
@@ -232,7 +232,7 @@ if (isset($_GET['delete'])) {
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__footer">
-                                                <a href="#"> <i class="zmdi zmdi-power"></i>Logout</a>
+                                                <a href="logout.php"> <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
                                         </div>
                                     </div>

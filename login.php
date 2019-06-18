@@ -6,17 +6,9 @@ require_once('inc/functions.php');
 if (isset($_POST['submit'])) {
     $usernameEmail = test_input($_POST['usernameEmail']);
     $password = test_input($_POST['password']);
-    $password = md5($password);
 
     if (empty($usernameEmail) || empty($password)) {
-        $_SESSION['ErrorMessage'] = "All fields required";
-        //redirect_to("categories.php");
-    } elseif (strlen($usernameEmail) < 4) {
-        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
-        //redirect_to("categories.php");
-    } elseif (strlen($usernameEmail) < 4) {
-        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
-        //redirect_to("categories.php");
+        $_SESSION['ErrorMessage'] = "All fields are required.";
     } else {
         $found_account = login_attempt($usernameEmail, $password);
         if ($found_account) {
@@ -31,7 +23,7 @@ if (isset($_POST['submit'])) {
                         window.open('index.php', '_SELF');
                         </script>";
         } else {
-            $_SESSION['ErrorMessage'] = "Email or password doesn't match our database records. Please Try again.";
+            $_SESSION['ErrorMessage'] = "Email or password doesn't match our database records. Please try again.";
         }
     }
 }
