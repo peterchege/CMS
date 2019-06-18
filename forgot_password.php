@@ -20,6 +20,7 @@ if (isset($_POST['submitReset'])) {
 
             //insert token into database
             $updateToken = $conn->query("UPDATE media_centre_admin_registration SET password_reset_token = '$token' WHERE email = '$usernameEmail' ");
+
             //send reset email
             require_once 'mailer/PHPMailer.php';
             require_once 'mailer/SMTP.php';
@@ -139,7 +140,7 @@ if (isset($_POST['submitReset'])) {
                                 <br />
                                 <br />
                                 <button name="submitReset" class="au-btn au-btn--block au-btn--green m-b-20" type="submit">
-                                    Reset Password
+                                    Send Link
                                 </button>
                             </form>
                         </div>
