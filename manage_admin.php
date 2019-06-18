@@ -43,7 +43,6 @@ if (isset($_GET['delete'])) {
     $delete_id = htmlentities($delete_id);
     $deleteQuery = "DELETE FROM media_centre_admin_registration WHERE id='$delete_id'";
     $deleteQueryExecute = $conn->query($deleteQuery);
-
     if ($deleteQueryExecute) {
         $_SESSION['SuccessMessage'] = 'Admin deleted successfully';
     } else {
