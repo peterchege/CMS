@@ -19,6 +19,17 @@ function sanitize($dirty)
     return htmlentities($dirty, ENT_QUOTES, "UTF-8");
 }
 
+// displaying errors
+function display_errors($errors)
+{
+    $count = 1;
+    $display = '<ul class="alert alert-danger">';
+    foreach ($errors as $error) {
+        $display .= '<li class="">' . $error . '</li>';
+    }
+    $display .= '</ul>';
+    return $display;
+}
 
 function desanitize($clean)
 {

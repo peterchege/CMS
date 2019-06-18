@@ -3,35 +3,71 @@ require_once('inc/db.php');
 require_once('inc/sessions.php');
 require_once('inc/functions.php');
 
-if (isset($_POST['submit'])) {
+if (isset($_POST['submitReset'])) {
     $usernameEmail = test_input($_POST['usernameEmail']);
-    $password = test_input($_POST['password']);
-    $password = md5($password);
-
-    if (empty($usernameEmail) || empty($password)) {
-        $_SESSION['ErrorMessage'] = "All fields required";
-        //redirect_to("categories.php");
-    } elseif (strlen($usernameEmail) < 4) {
-        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
-        //redirect_to("categories.php");
-    } elseif (strlen($usernameEmail) < 4) {
-        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required";
-        //redirect_to("categories.php");
+    if (empty($usernameEmail)) {
+        $errors[] = 'Email is required';
     } else {
-        $found_account = login_attempt($usernameEmail, $password);
-        if ($found_account) {
-            $_SESSION['SuccessMessage'] = "Login successful";
-            $_SESSION['username'] = $found_account['username'];
-            $_SESSION['user_id'] = $found_account['id'];
-            $_SESSION['email'] = $found_account['email'];
-            echo "<script>
-                        alert('Login successful. Welcome.');
-                    </script>";
-            echo "<script>
-                        window.open('index.php', '_SELF');
-                        </script>";
+        // check if user email exists in the database
+        $emailCheckExist = $conn->query("SELECT * FROM media_centre_admin_registration WHERE email = '$usernameEmail' ");
+        $resetRecepient = mysqli_fetch_assoc($emailCheckExist);
+        echo 'rows discovered:' . mysqli_num_rows($emailCheckExist) . ' and email is ' . $usernameEmail;
+        if (mysqli_num_rows($emailCheckExist) !== 1) {
+            $errors[] = 'The email you entered does not exist in our database.';
         } else {
-            $_SESSION['ErrorMessage'] = "Email or password doesn't match our database records. Please Try again.";
+            // generate reset token
+            $token = bin2hex(openssl_random_pseudo_bytes(40));
+
+            //insert token into database
+            $updateToken = $conn->query("UPDATE media_centre_admin_registration SET password_reset_token = '$token' WHERE email = '$usernameEmail' ");
+            //send reset email
+            require_once 'mailer/PHPMailer.php';
+            require_once 'mailer/SMTP.php';
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'anthony.baru@apollo.co.ke';                 // SMTP username
+            $mail->Password = 'Abaru1!';                           // SMTP password
+            //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            $mail->setFrom('anthony.baru@apollo.co.ke', 'Tony Dev ');
+            $mail->addAddress("{$usernameEmail}", $resetRecepient['username']);     // Add a recipient
+            //$mail->addAddress('ellen@example.com');               // Name is optional
+            $mail->addReplyTo('no-reply@apollo.co.ke', 'No reply');
+            $mail->addBCC('scarletjasmine3@gmail.com');
+
+            //$mail->addBCC("{$email}");
+            //$mail->addBCC("{$email}");
+            $mail->Subject = 'Reset Account Link.';
+
+            // Program to display URL of current page. 
+
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+                $link = "https";
+            else
+                $link = "http";
+
+            // Here append the common URL characters. 
+            $link .= "://";
+
+            // Append the host(domain name, ip) to the URL. 
+            //$link .= $_SERVER['HTTP_HOST'];
+
+            // Append the requested resource location to the URL 
+            //$link .= $_SERVER['REQUEST_URI'];
+
+            $mail->Body    = 'Please click the link to rest your password:</br>' . $link . $_SERVER['HTTP_HOST'] . '/reset_password.php?password_reset_token=' . $token . '';
+
+            if ($mail->send()) {
+                //echo 'Email sent successfully to ' . $email;
+                $_SESSION['SuccessMessage'] = 'Reset link sent successfully. Check your email (' . $usernameEmail . ').';
+                redirect_to('login.php');
+            } else {
+                $_SESSION['ErrorMessage'] = 'Something went wrong. Please try again. Activation link not sent.';
+            }
         }
     }
 }
@@ -48,7 +84,7 @@ if (isset($_POST['submit'])) {
     <meta name="keywords" content="" />
 
     <!-- Title Page-->
-    <title>Login</title>
+    <title>Password Reset</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
@@ -87,31 +123,23 @@ if (isset($_POST['submit'])) {
                             <?php
                             echo Message();
                             echo SuccessMessage();
+                            if (!empty($errors)) {
+                                echo display_errors($errors);
+                            }
                             ?>
                             <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="text" name="usernameEmail" placeholder="Email" />
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password" />
+                                    <label>Enter your email address to receive reset link.</label>
+                                    <br>
+                                    <input class="au-input au-input--full" type="email" name="usernameEmail" placeholder="Email" required />
                                 </div>
                                 <br />
                                 <div class="login-checkbox">
-                                    <!--
-                                    <label>
-                                        <input type="checkbox" name="remember" />Remember Me
-                                    </label> 
-                                    -->
-                                    <label>
-                                        <a href="forgot_password.php">Forgot Password?</a>
-                                    </label>
                                 </div>
                                 <br />
                                 <br />
-                                <button name="submit" class="au-btn au-btn--block au-btn--green m-b-20" type="submit">
-                                    sign in
+                                <button name="submitReset" class="au-btn au-btn--block au-btn--green m-b-20" type="submit">
+                                    Reset Password
                                 </button>
                             </form>
                         </div>
