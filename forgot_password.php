@@ -58,9 +58,9 @@ if (isset($_POST['submitReset'])) {
             //$link .= $_SERVER['HTTP_HOST'];
 
             // Append the requested resource location to the URL 
-            //$link .= $_SERVER['REQUEST_URI'];
+            //$link .= $_SERVER['SERVER_NAME'];
 
-            $mail->Body    = 'Please click the link to rest your password:</br>' . $link . $_SERVER['HTTP_HOST'] . '/reset_password.php?password_reset_token=' . $token . '';
+            $mail->Body    = 'Please click the link to reset your password:</br>' . $link . $_SERVER['HTTP_HOST'] . '/cms/reset_password.php?password_reset_token=' . $token . '';
 
             if ($mail->send()) {
                 //echo 'Email sent successfully to ' . $email;

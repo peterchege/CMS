@@ -4,29 +4,50 @@ require_once('inc/sessions.php');
 require_once('inc/functions.php');
 
 if (isset($_POST['resetPassword'])) {
-    $usernameEmail = test_input($_POST['usernameEmail']);
     $password = test_input($_POST['password']);
+    $confirm_password = test_input($_POST['confirm_password']);
 
-    if (empty($usernameEmail) || empty($password)) {
-        $_SESSION['ErrorMessage'] = "All fields are required.";
+    if (empty($password) || empty($confirm_password)) {
+        $errors[] = 'All fields are required.';
     } else {
-        $found_account = login_attempt($usernameEmail, $password);
-        if ($found_account) {
-            $_SESSION['SuccessMessage'] = "Login successful";
-            $_SESSION['username'] = $found_account['username'];
-            $_SESSION['user_id'] = $found_account['id'];
-            $_SESSION['email'] = $found_account['email'];
-            echo "<script>
-                        alert('Login successful. Welcome.');
-                    </script>";
-            echo "<script>
-                        window.open('index.php', '_SELF');
-                        </script>";
+        if (strlen($password) < 6 || strlen($confirm_password) < 6) {
+            $errors[] = 'Password should be greater than 5 characters.';
+        }
+        if ($password != $confirm_password) {
+            $errors[] = 'The passwords you entered do not match.';
         } else {
-            $_SESSION['ErrorMessage'] = "Email or password doesn't match our database records. Please try again.";
+            if (empty($errors)) {
+                // encrypt password
+                $password = password_hash($password, PASSWORD_DEFAULT);
+                // run update query
+                $password_reset_token = $_SESSION['password_reset_token'];
+                $updateQuery = "UPDATE media_centre_admin_registration SET `password`='$password' WHERE password_reset_token = '$password_reset_token' ";
+                $query = $conn->query($updateQuery);
+                unset($_SESSION['password_reset_token']);
+                $_SESSION['SuccessMessage'] = 'Password updated successfully. Please Login.';
+                redirect_to('login.php');
+            } else {
+                $errors[] = 'An error occurred. Please try again.';
+            }
         }
     }
 }
+
+if (!isset($_SESSION['password_reset_token'])) {
+    if (!isset($_GET['password_reset_token'])) {
+        $_SESSION['ErrorMessage'] = 'Invalid Access.';
+        redirect_to('login.php');
+    } else {
+        if (empty($_GET['password_reset_token'])) {
+            $_SESSION['ErrorMessage'] = 'Invalid Access.';
+            redirect_to('login.php');
+        } else {
+            $password_reset_token = $_GET['password_reset_token'];
+            $_SESSION['password_reset_token'] = $_GET['password_reset_token'];
+        }
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,15 +100,18 @@ if (isset($_POST['resetPassword'])) {
                             <?php
                             echo Message();
                             echo SuccessMessage();
+                            if (!empty($errors)) {
+                                echo display_errors($errors);
+                            }
                             ?>
                             <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
                                     <label>New Password<label>
-                                            <input class="au-input au-input--full" type="text" name="password" placeholder="Email" />
+                                            <input class="au-input au-input--full" type="password" name="password" placeholder="" />
                                 </div>
                                 <div class="form-group">
                                     <label>Confirm Password</label>
-                                    <input class="au-input au-input--full" type="password" name="confirm_password" placeholder="Password" />
+                                    <input class="au-input au-input--full" type="password" name="confirm_password" placeholder="" />
                                 </div>
                                 <br />
                                 <div class="login-checkbox">
@@ -95,7 +119,7 @@ if (isset($_POST['resetPassword'])) {
                                 <br />
                                 <br />
                                 <button name="resetPassword" class="au-btn au-btn--block au-btn--green m-b-20" type="submit">
-                                    sign in
+                                    Update Password
                                 </button>
                             </form>
                         </div>
