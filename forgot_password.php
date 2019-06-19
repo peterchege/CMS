@@ -85,7 +85,7 @@ if (isset($_POST['submitReset'])) {
     <meta name="keywords" content="" />
 
     <!-- Title Page-->
-    <title>Password Reset</title>
+    <title>Forgot Password</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
