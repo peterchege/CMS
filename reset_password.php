@@ -40,7 +40,7 @@ if (isset($_POST['resetPassword'])) {
     <meta name="keywords" content="" />
 
     <!-- Title Page-->
-    <title>Login</title>
+    <title>Reset Password</title>
 
     <!-- Fontfaces CSS-->
     <link href="css/font-face.css" rel="stylesheet" media="all" />
@@ -82,23 +82,15 @@ if (isset($_POST['resetPassword'])) {
                             ?>
                             <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
-                                    <label>Email Address</label>
-                                    <input class="au-input au-input--full" type="text" name="usernameEmail" placeholder="Email" />
+                                    <label>New Password<label>
+                                            <input class="au-input au-input--full" type="text" name="password" placeholder="Email" />
                                 </div>
                                 <div class="form-group">
-                                    <label>Password</label>
-                                    <input class="au-input au-input--full" type="password" name="password" placeholder="Password" />
+                                    <label>Confirm Password</label>
+                                    <input class="au-input au-input--full" type="password" name="confirm_password" placeholder="Password" />
                                 </div>
                                 <br />
                                 <div class="login-checkbox">
-                                    <!--
-                                    <label>
-                                        <input type="checkbox" name="remember" />Remember Me
-                                    </label> 
-                                    -->
-                                    <label>
-                                        <a href="forgot_password.php">Forgot Password?</a>
-                                    </label>
                                 </div>
                                 <br />
                                 <br />
