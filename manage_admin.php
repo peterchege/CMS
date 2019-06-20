@@ -24,9 +24,7 @@ if (isset($_POST['submitNewAdmin'])) {
         $invite_token = bin2hex(openssl_random_pseudo_bytes(40));
         $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added by`) VALUES('$dateTime','$invite_token','$email','$admin')";
         $conn->query($query);
-        if ($conn) {
-            $_SESSION['SuccessMessage'] = "New admin entered successfully.";
-        } else {
+        if ($conn) { } else {
             $_SESSION['ErroMessage'] = "Something went wrong. Please try again.";
         }
     }
