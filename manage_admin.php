@@ -13,17 +13,22 @@ if (isset($_POST['submitNewAdmin'])) {
     $admin = $_SESSION['username'];
 
     //checking if admin already exists
-    $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE username='$username' or email = '$email'";
+    $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE email = '$email'";
     $adminQueryExecute = $conn->query($adminQuery);
 
     if (empty($email)) {
         $errors[] = "Admin email is required.";
     } elseif (mysqli_num_rows($adminQueryExecute) > 0) {
-        $_SESSION['ErrorMessage'] = "The email of the admin already exists. Choose another one.";
+        $errors[] = "The email of the admin already exists. Choose another one.";
     } else {
-        $query = "INSERT INTO media_centre_admin_registration(`datetime`, `username`,`password`,email,`added by`) VALUES('$dateTime','$username','$confirm_password','$email','$admin')";
+        $invite_token = bin2hex(openssl_random_pseudo_bytes(40));
+        $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added by`) VALUES('$dateTime','$invite_token','$email','$admin')";
         $conn->query($query);
-        $_SESSION['SuccessMessage'] = "New admin entered successfully";
+        if ($conn) {
+            $_SESSION['SuccessMessage'] = "New admin entered successfully.";
+        } else {
+            $_SESSION['ErroMessage'] = "Something went wrong. Please try again.";
+        }
     }
 }
 
@@ -34,9 +39,9 @@ if (isset($_GET['delete'])) {
     $deleteQuery = "DELETE FROM media_centre_admin_registration WHERE id='$delete_id'";
     $deleteQueryExecute = $conn->query($deleteQuery);
     if ($deleteQueryExecute) {
-        $_SESSION['SuccessMessage'] = 'Admin deleted successfully';
+        $_SESSION['SuccessMessage'] = 'Admin deleted successfully.';
     } else {
-        $_SESSION['Message'] = 'Something went terribly wrong. Please try again';
+        $_SESSION['Message'] = 'Something went terribly wrong. Please try again.';
     }
 }
 ?>
@@ -249,15 +254,6 @@ if (isset($_GET['delete'])) {
                                         if (!empty($errors))
                                             echo display_errors($errors);
                                         ?>
-                                        <!-- <div class="form-group">
-                                            <label class="control-label mb-1 labd">Username</label><br>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-user"></i>
-                                                </div>
-                                                <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<?= ((isset($username)) ? $username : ''); ?>">
-                                            </div>
-                                        </div> -->
                                         <div class="form-group">
                                             <label class="control-label mb-1 labd">Email</label><br>
                                             <div class="input-group">
@@ -267,24 +263,6 @@ if (isset($_GET['delete'])) {
                                                 <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?= ((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
-                                        <!-- <div class="form-group">
-                                            <label class="control-label mb-1 labd">Password</label><br>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-asterisk"></i>
-                                                </div>
-                                                <input type="password" id="password" name="password" placeholder="Password" class="form-control" value="<?= ((isset($password)) ? $password : ''); ?>">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label mb-1 labd">Confirm Password</label><br>
-                                            <div class="input-group">
-                                                <div class="input-group-addon">
-                                                    <i class="fa fa-asterisk"></i>
-                                                </div>
-                                                <input type="password" id="password" name="confirm_password" placeholder="Retype same password" class="form-control" value="<?= ((isset($confirm_password)) ? $confirm_password : ''); ?>">
-                                            </div>
-                                        </div>-->
                                         <br>
                                         <div class="form-actions form-group">
                                             <button name="submitNewAdmin" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
@@ -296,7 +274,6 @@ if (isset($_GET['delete'])) {
                             </div>
                         </div>
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
