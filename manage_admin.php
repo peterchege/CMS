@@ -24,7 +24,56 @@ if (isset($_POST['submitNewAdmin'])) {
         $invite_token = bin2hex(openssl_random_pseudo_bytes(40));
         $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added by`) VALUES('$dateTime','$invite_token','$email','$admin')";
         $conn->query($query);
-        if ($conn) { } else {
+        if ($conn) {
+
+            //send reset email
+            require_once 'mailer/PHPMailer.php';
+            require_once 'mailer/SMTP.php';
+
+            $mail = new PHPMailer;
+            $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
+            $mail->SMTPAuth = true;                               // Enable SMTP authentication
+            $mail->Username = 'anthony.baru@apollo.co.ke';                 // SMTP username
+            $mail->Password = 'Abaru1!';                           // SMTP password
+            //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+            $mail->Port = 587;                                    // TCP port to connect to
+
+            $mail->setFrom('anthony.baru@apollo.co.ke', 'Tony Invite ');
+            $mail->addAddress("{$email}");     // Add a recipient
+            //$mail->addAddress('ellen@example.com');               // Name is optional
+            $mail->addReplyTo('no-reply@apollo.co.ke', 'No reply');
+            $mail->addBCC('scarletjasmine3@gmail.com');
+
+            //$mail->addBCC("{$email}");
+            //$mail->addBCC("{$email}");
+            $mail->Subject = 'INVITATION LINK.';
+
+            // Program to display URL of current page. 
+
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+                $link = "https";
+            else
+                $link = "http";
+
+            // Here append the common URL characters. 
+            $link .= "://";
+
+            // Append the host(domain name, ip) to the URL. 
+            //$link .= $_SERVER['HTTP_HOST'];
+
+            // Append the requested resource location to the URL 
+            //$link .= $_SERVER['SERVER_NAME'];
+
+            $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE MEDIA CENTRE CMS[. Please click the link to create your account: ' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
+
+            if ($mail->send()) {
+                //echo 'Email sent successfully to ' . $email;
+                $_SESSION['SuccessMessage'] = 'Activation link sent successfully to: ' . $email . '.';
+            } else {
+                $_SESSION['ErrorMessage'] = 'Something went wrong. Please try again. Activation link not sent.';
+            }
+        } else {
             $_SESSION['ErroMessage'] = "Something went wrong. Please try again.";
         }
     }
