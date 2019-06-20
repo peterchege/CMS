@@ -6,10 +6,7 @@ require_once('inc/functions.php');
 
 confirm_login();
 if (isset($_POST['submitNewAdmin'])) {
-    $username = test_input($_POST['username']);
-    $password = test_input($_POST['password']);
     $email = test_input($_POST['email']);
-    $confirm_password = test_input($_POST['confirm_password']);
     $currentTime = time();
     $dateTime = strftime("%d, %B %Y %H:%M:%S", $currentTime);
     $dateTime;
@@ -19,18 +16,11 @@ if (isset($_POST['submitNewAdmin'])) {
     $adminQuery = "SELECT * FROM media_centre_admin_registration WHERE username='$username' or email = '$email'";
     $adminQueryExecute = $conn->query($adminQuery);
 
-    if (empty($username) || empty($password) || empty($confirm_password)) {
-        $_SESSION['ErrorMessage'] = "All fields required.";
-    } elseif (strlen($username) < 4) {
-        $_SESSION['ErrorMessage'] = "The name of the admin you entered is too short. At least 4 characters required.";
-        //redirect_to("categories.php");
+    if (empty($email)) {
+        $errors[] = "Admin email is required.";
     } elseif (mysqli_num_rows($adminQueryExecute) > 0) {
-        $_SESSION['ErrorMessage'] = "The name of the admin or email already exists. Choose another name.";
-    } elseif ($password !== $confirm_password) {
-        $_SESSION['ErrorMessage'] = "The passwords don't match.";
+        $_SESSION['ErrorMessage'] = "The email of the admin already exists. Choose another one.";
     } else {
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        $confirm_password = password_hash($confirm_password, PASSWORD_DEFAULT);
         $query = "INSERT INTO media_centre_admin_registration(`datetime`, `username`,`password`,email,`added by`) VALUES('$dateTime','$username','$confirm_password','$email','$admin')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New admin entered successfully";
@@ -250,14 +240,16 @@ if (isset($_GET['delete'])) {
                         <div class="col-md-8 offset-md-2">
 
                             <div class="card">
-                                <div class="card-header">Add User</div>
+                                <div class="card-header">Add Admin</div>
                                 <div class="card-body card-block">
                                     <form action="" method="post" class="new-user">
                                         <?php
                                         echo Message();
                                         echo SuccessMessage();
+                                        if (!empty($errors))
+                                            echo display_errors($errors);
                                         ?>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="control-label mb-1 labd">Username</label><br>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
@@ -265,8 +257,7 @@ if (isset($_GET['delete'])) {
                                                 </div>
                                                 <input type="text" id="username" name="username" placeholder="Username" class="form-control" value="<?= ((isset($username)) ? $username : ''); ?>">
                                             </div>
-                                        </div>
-
+                                        </div> -->
                                         <div class="form-group">
                                             <label class="control-label mb-1 labd">Email</label><br>
                                             <div class="input-group">
@@ -276,8 +267,7 @@ if (isset($_GET['delete'])) {
                                                 <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?= ((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
-
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <label class="control-label mb-1 labd">Password</label><br>
                                             <div class="input-group">
                                                 <div class="input-group-addon">
@@ -286,7 +276,6 @@ if (isset($_GET['delete'])) {
                                                 <input type="password" id="password" name="password" placeholder="Password" class="form-control" value="<?= ((isset($password)) ? $password : ''); ?>">
                                             </div>
                                         </div>
-
                                         <div class="form-group">
                                             <label class="control-label mb-1 labd">Confirm Password</label><br>
                                             <div class="input-group">
@@ -295,17 +284,16 @@ if (isset($_GET['delete'])) {
                                                 </div>
                                                 <input type="password" id="password" name="confirm_password" placeholder="Retype same password" class="form-control" value="<?= ((isset($confirm_password)) ? $confirm_password : ''); ?>">
                                             </div>
-                                        </div><br>
-
+                                        </div>-->
+                                        <br>
                                         <div class="form-actions form-group">
                                             <button name="submitNewAdmin" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
-                                                <span id="payment-button-amount">Add New Admin</span>
+                                                <span id="payment-button-amount">Invite Admin</span>
                                             </button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
@@ -337,7 +325,6 @@ if (isset($_GET['delete'])) {
                                             ?>
                                             <?php while ($a = mysqli_fetch_assoc($run)) :  ?>
                                                 <tr>
-
                                                     <td>
                                                         <?= ++$SrNo; ?>
                                                     </td>
