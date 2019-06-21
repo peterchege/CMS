@@ -7,7 +7,6 @@ if (isset($_POST['register'])) {
     $username = test_input($_POST['username']);
     $password = test_input($_POST['password']);
     $confirm_password = test_input($_POST['confirm_password']);
-
     if (empty($username) || empty($password) || empty($confirm_password)) {
         $_SESSION['ErrorMessage'] = "All fields are required.";
     } else {
@@ -36,11 +35,11 @@ if (isset($_POST['register'])) {
     }
 } else {
     if (!isset($_GET['invite_token'])) {
-        $_SERVER['ErrorMessage.'] = 'Invalid token.';
+        $_SESSION['ErrorMessage'] = 'Invalid token.';
         redirect_to('login.php');
     } else {
         if (empty($_GET['invite_token'])) {
-            $_SERVER['ErrorMessage'] = 'Invalid token.';
+            $_SESSION['ErrorMessage'] = 'Invalid token.';
             redirect_to('login.php');
         } else {
             $_SESSION['invite_token'] = $_GET['invite_token'];
