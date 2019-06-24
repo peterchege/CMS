@@ -7,22 +7,22 @@ confirm_login();
 // show/hiding posts
 // showing
 if (isset($_GET['show'])) {
-    $show_id = $_GET['show'];
+    $show_id = sanitize($_GET['show']);
     $conn->query("UPDATE media_centre_posts SET status = 1 WHERE id = '$show_id' ");
     if ($conn) {
-        $_SESSION['SuccessMessage'] = 'Post shown successfully';
+        $_SESSION['SuccessMessage'] = 'Post shown successfully.';
     } else {
-        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again';
+        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again.';
     }
 }
 
 if (isset($_GET['hide'])) {
-    $hide_id = $_GET['hide'];
+    $hide_id = sanitize($_GET['hide']);
     $conn->query("UPDATE media_centre_posts SET status = 0 WHERE id ='$hide_id' ");
     if ($conn) {
-        $_SESSION['SuccessMessage'] = 'Post hidden successfully';
+        $_SESSION['SuccessMessage'] = 'Post hidden successfully.';
     } else {
-        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again';
+        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again.';
     }
 }
 //dashboard table information
