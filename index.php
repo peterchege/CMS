@@ -4,6 +4,27 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/sessions.php';
 require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
 
 confirm_login();
+// show/hiding posts
+// showing
+if (isset($_GET['show'])) {
+    $show_id = $_GET['show'];
+    $conn->query("UPDATE media_centre_posts SET status = 1 WHERE id = '$show_id' ");
+    if ($conn) {
+        $_SESSION['SuccessMessage'] = 'Post shown successfully';
+    } else {
+        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again';
+    }
+}
+
+if (isset($_GET['hide'])) {
+    $hide_id = $_GET['hide'];
+    $conn->query("UPDATE media_centre_posts SET status = 0 WHERE id ='$hide_id' ");
+    if ($conn) {
+        $_SESSION['SuccessMessage'] = 'Post hidden successfully';
+    } else {
+        $_SESSION['ErrorMessage'] = 'An error occurred. Please try again';
+    }
+}
 //dashboard table information
 $viewQuery = "SELECT * FROM media_centre_posts ORDER BY id desc ";
 $execute = $conn->query($viewQuery);
@@ -326,11 +347,16 @@ $sno = 0;
                                                     <td class="desc"><?= $t['author']; ?></td>
                                                     <td><?= $t['category']; ?></td>
                                                     <td>
-                                                        <span class="status--process"><img style="width:200px; height:10%;" src="/../cms/<?= $t['image']; ?>" /></span>
+                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?= $t['image']; ?>" /></span>
                                                     </td>
 
                                                     <td>
                                                         <div class="table-data-feature">
+                                                            <?php if ($t['status'] == 0) : ?>
+                                                                <a href="index.php?show=<?= $t['id']; ?>"><button class="btn-success">Show</button></a>
+                                                            <?php else : ?>
+                                                                <a href="index.php?hide=<?= $t['id']; ?>"><button class="btn-primary">Hide</button></a>
+                                                            <?php endif; ?>
                                                             <a href="editpost.php?edit=<?= $t['id']; ?>"><button class="btn-success">Edit</button></a>
                                                             <a href="deletepost.php?delete=<?= $t['id']; ?>"><button class="btn-danger">Delete</button></a>
                                                         </div>
