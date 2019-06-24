@@ -349,7 +349,6 @@ $sno = 0;
                                                     <td>
                                                         <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?= $t['image']; ?>" /></span>
                                                     </td>
-
                                                     <td>
                                                         <div class="table-data-feature">
                                                             <?php if ($t['status'] == 0) : ?>
@@ -375,7 +374,6 @@ $sno = 0;
                                 <!-- END DATA TABLE -->
                             </div>
                         </div><br>
-
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
