@@ -423,23 +423,29 @@ $sno = 0;
     $month = array();
     $row_result = array();
     $posts_results = array();
+    $category_results = array();
     for ($m = 1; $m <= date('m'); ++$m) {
         $month_names = date('F', mktime(0, 0, 0, $m, 1));
         $month_nums = date('m', mktime(0, 0, 0, $m, 1));
         $admin = mysqli_query($conn, "SELECT * FROM media_centre_admin_registration  WHERE MONTH(date_added) = '$month_nums' ");
         $posts = mysqli_query($conn, "SELECT * FROM media_centre_posts  WHERE MONTH(date_added) = '$month_nums' ");
+        $categories = mysqli_query($conn, "SELECT * FROM media_centre_categories  WHERE MONTH(date_added) = '$month_nums'");
         $rows = mysqli_num_rows($admin);
         $posts_rows = mysqli_num_rows($posts);
+        $category_rows = mysqli_num_rows($categories);
         $month_array = " ' " . $month_names . " ' ";
         $rows_array = "  " . $rows . "  ";
         $posts_rows_array = "  " . $posts_rows . "  ";
+        $category_array = "  " . $category_rows . "  ";
         array_push($month, $month_array);
         array_push($row_result, $rows_array);
         array_push($posts_results, $posts_rows_array);
+        array_push($category_results, $category_array);
     }
     $month_implode = implode(',', $month);
     $row_result_implode = implode(',', $row_result);
     $posts_row_results_implode = implode(',', $posts_results);
+    $category_row_implode = implode(',', $category_results);
 
     ?>
     <script>
@@ -586,11 +592,11 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                    labels: [<?= $month_implode; ?>],
                     type: 'line',
                     datasets: [{
-                        data: [65, 59, 84, 84, 51, 55],
-                        label: 'Dataset',
+                        data: [<?= $category_row_implode; ?>],
+                        label: 'Categories added',
                         backgroundColor: 'transparent',
                         borderColor: 'rgba(255,255,255,.55)',
                     }, ]
