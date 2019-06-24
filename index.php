@@ -413,7 +413,35 @@ $sno = 0;
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
+    <?php
+    $conn = mysqli_connect("localhost", "root", "", "apa");
+    $date = date("y-m-d") . '<br>';
+    $end_date = date("2017-01-01") . '<br>';
+    $current_month = date("m") . '<br>';
 
+
+    $month = array();
+    $row_result = array();
+    $posts_results = array();
+    for ($m = 1; $m <= date('m'); ++$m) {
+        $month_names = date('F', mktime(0, 0, 0, $m, 1));
+        $month_nums = date('m', mktime(0, 0, 0, $m, 1));
+        $admin = mysqli_query($conn, "SELECT * FROM media_centre_admin_registration  WHERE MONTH(date_added) = '$month_nums' ");
+        $posts = mysqli_query($conn, "SELECT * FROM media_centre_posts  WHERE MONTH(date_added) = '$month_nums' ");
+        $rows = mysqli_num_rows($admin);
+        $posts_rows = mysqli_num_rows($posts);
+        $month_array = " ' " . $month_names . " ' ";
+        $rows_array = "  " . $rows . "  ";
+        $posts_rows_array = "  " . $posts_rows . "  ";
+        array_push($month, $month_array);
+        array_push($row_result, $rows_array);
+        array_push($posts_results, $posts_rows_array);
+    }
+    $month_implode = implode(',', $month);
+    $row_result_implode = implode(',', $row_result);
+    $posts_row_results_implode = implode(',', $posts_results);
+
+    ?>
     <script>
         //WidgetChart 1
         var ctx = document.getElementById("widgetChart1");
@@ -422,11 +450,11 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    labels: [<?= $month_implode; ?>],
                     type: 'line',
                     datasets: [{
-                        data: [78, 81, 80, 45, 34, 12, 40],
-                        label: 'Dataset',
+                        data: [<?= $row_result_implode; ?>],
+                        label: 'Admins added',
                         backgroundColor: 'rgba(255,255,255,.1)',
                         borderColor: 'rgba(255,255,255,.55)',
                     }, ]
@@ -472,6 +500,146 @@ $sno = 0;
                         },
                         point: {
                             radius: 0,
+                            hitRadius: 10,
+                            hoverRadius: 4
+                        }
+                    }
+                }
+            });
+        }
+
+        //WidgetChart 2
+        var ctx = document.getElementById("widgetChart2");
+        if (ctx) {
+            ctx.height = 130;
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [<?= $month_implode; ?>],
+                    type: 'line',
+                    datasets: [{
+                        data: [<?= $posts_row_results_implode ?>],
+                        label: 'Posts added',
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgba(255,255,255,.55)',
+                    }, ]
+                },
+                options: {
+
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        titleFontSize: 12,
+                        titleFontColor: '#000',
+                        bodyFontColor: '#000',
+                        backgroundColor: '#fff',
+                        titleFontFamily: 'Montserrat',
+                        bodyFontFamily: 'Montserrat',
+                        cornerRadius: 3,
+                        intersect: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: 'transparent',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: {
+                                fontSize: 2,
+                                fontColor: 'transparent'
+                            }
+                        }],
+                        yAxes: [{
+                            display: false,
+                            ticks: {
+                                display: false,
+                            }
+                        }]
+                    },
+                    title: {
+                        display: false,
+                    },
+                    elements: {
+                        line: {
+                            tension: 0.00001,
+                            borderWidth: 1
+                        },
+                        point: {
+                            radius: 4,
+                            hitRadius: 10,
+                            hoverRadius: 4
+                        }
+                    }
+                }
+            });
+        }
+
+
+        //WidgetChart 3
+        var ctx = document.getElementById("widgetChart3");
+        if (ctx) {
+            ctx.height = 130;
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September'],
+                    type: 'line',
+                    datasets: [{
+                        data: [65, 59, 84, 84, 51, 55],
+                        label: 'Dataset',
+                        backgroundColor: 'transparent',
+                        borderColor: 'rgba(255,255,255,.55)',
+                    }, ]
+                },
+                options: {
+
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    responsive: true,
+                    tooltips: {
+                        mode: 'index',
+                        titleFontSize: 12,
+                        titleFontColor: '#000',
+                        bodyFontColor: '#000',
+                        backgroundColor: '#fff',
+                        titleFontFamily: 'Montserrat',
+                        bodyFontFamily: 'Montserrat',
+                        cornerRadius: 3,
+                        intersect: false,
+                    },
+                    scales: {
+                        xAxes: [{
+                            gridLines: {
+                                color: 'transparent',
+                                zeroLineColor: 'transparent'
+                            },
+                            ticks: {
+                                fontSize: 2,
+                                fontColor: 'transparent'
+                            }
+                        }],
+                        yAxes: [{
+                            display: false,
+                            ticks: {
+                                display: false,
+                            }
+                        }]
+                    },
+                    title: {
+                        display: false,
+                    },
+                    elements: {
+                        line: {
+                            borderWidth: 1
+                        },
+                        point: {
+                            radius: 4,
                             hitRadius: 10,
                             hoverRadius: 4
                         }
