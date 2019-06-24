@@ -32,6 +32,7 @@ if (isset($_POST['submitNewAdmin'])) {
 
             $mail = new PHPMailer;
             $mail->isSMTP();                                      // Set mailer to use SMTP
+            $mail->isHTML(true);
             $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
             $mail->SMTPAuth = true;                               // Enable SMTP authentication
             $mail->Username = 'anthony.baru@apollo.co.ke';                 // SMTP username
@@ -65,7 +66,7 @@ if (isset($_POST['submitNewAdmin'])) {
             // Append the requested resource location to the URL 
             //$link .= $_SERVER['SERVER_NAME'];
 
-            $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE MEDIA CENTRE AND CSR CMS[. Please click the link to create your account: ' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
+            $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE MEDIA CENTRE AND CSR CMS[. Please click the link to create your account: </br>' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
 
             if ($mail->send()) {
                 //echo 'Email sent successfully to ' . $email;
