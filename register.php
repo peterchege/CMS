@@ -107,6 +107,7 @@ if (isset($_POST['register'])) {
                             ?>
                             <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
+                                    <p class="form-group">Please register your account below:</p>
                                     <label>Username</label>
                                     <input class="au-input au-input--full" type="text" name="username" placeholder="" />
                                 </div>
