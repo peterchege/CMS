@@ -14,8 +14,6 @@ function redirect_to($new_location)
 function sanitize($dirty)
 {
     $dirty = trim($dirty);
-    // $dirty = stripslashes($dirty);
-    // $dirty = htmlspecialchars($dirty);
     return htmlentities($dirty, ENT_QUOTES, "UTF-8");
 }
 
@@ -39,7 +37,7 @@ function desanitize($clean)
 function test_input($data)
 {
     $data = trim($data);
-    $data = stripslashes($data);
+    //$data = stripslashes($data);
     $data = htmlspecialchars($data);
     return $data;
 }
@@ -47,6 +45,7 @@ function test_input($data)
 function test_output($data)
 {
     $data = htmlspecialchars_decode($data);
+    return $data;
 }
 
 //login function

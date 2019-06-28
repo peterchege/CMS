@@ -9,6 +9,7 @@ confirm_login();
 if (isset($_POST['submitPost'])) {
     $title = test_input($_POST['title']);
     $title = strtoupper($title);
+    $title = test_input($title);
     $category = test_input($_POST['category']);
     $post = sanitize($_POST['post']);
 
