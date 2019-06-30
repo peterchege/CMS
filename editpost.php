@@ -36,20 +36,23 @@ if (isset($_POST['submitEditedPost'])) {
 
     //image validation
     $photoFullname = $_FILES['image']['name'];
-    $filetype = $_FILES['image']['type'];
-    $photoFullnameExploded = explode('.', $photoFullname);
-    $photoName = $photoFullnameExploded[0];
-    $photoName = md5($photoName);
-    $photoName = $_SESSION['edit_id'] . $photoName;
-    $photoExt = $photoFullnameExploded[1];
-    $fullPhotoName = $photoName . '.' . $photoExt;
-    $photoUploadPath = 'images/posts/';
-    $edit_id_for_image = mysqli_fetch_assoc($runn);
-    $tmp_loc = $_FILES['image']['tmp_name'];
+    if ($photoFullname) {
+        $filetype = $_FILES['image']['type'];
+        $photoFullnameExploded = explode('.', $photoFullname);
+        $photoName = $photoFullnameExploded[0];
+        $photoName = md5($photoName);
+        $photoName = $_SESSION['edit_id'] . $photoName;
+        $photoExt = $photoFullnameExploded[1];
+        $fullPhotoName = $photoName . '.' . $photoExt;
+        $photoUploadPath = 'images/posts/';
+        $edit_id_for_image = mysqli_fetch_assoc($runn);
+        $tmp_loc = $_FILES['image']['tmp_name'];
 
 
-    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
-    $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
+        $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
+        $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
+    }
+
 
     if (empty($title) || empty($category)) {
         $_SESSION['ErrorMessage'] = "Title can't be empty";

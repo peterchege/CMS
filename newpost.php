@@ -20,18 +20,20 @@ if (isset($_POST['submitPost'])) {
 
     //image validation
     $photoFullname = $_FILES['image']['name'];
-    $filetype = $_FILES['image']['type'];
-    $photoFullnameExploded = explode('.', $photoFullname);
-    $photoName = $photoFullnameExploded[0];
-    $photoName = md5($photoName);
-    $photoExt = $photoFullnameExploded[1];
-    $fullPhotoName = $photoName . '.' . $photoExt;
-    $photoUploadPath = 'images/posts/';
-    $tmp_loc = $_FILES['image']['tmp_name'];
+    if ($photoFullname) {
+        $filetype = $_FILES['image']['type'];
+        $photoFullnameExploded = explode('.', $photoFullname);
+        $photoName = $photoFullnameExploded[0];
+        $photoName = md5($photoName);
+        $photoExt = $photoFullnameExploded[1];
+        $fullPhotoName = $photoName . '.' . $photoExt;
+        $photoUploadPath = 'images/posts/';
+        $tmp_loc = $_FILES['image']['tmp_name'];
 
+        $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
+        $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
+    }
 
-    $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
-    $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
 
     if (empty($title) || empty($category)) {
         $_SESSION['ErrorMessage'] = "Title and Category can't be empty.";
@@ -40,6 +42,8 @@ if (isset($_POST['submitPost'])) {
     } elseif (empty($photoFullname)) {
         $_SESSION['ErrorMessage'] = "Please select a valid image.";
     } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
+        $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
+    } elseif (empty($post)) {
         $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
     } else {
         move_uploaded_file($tmp_loc, $target);
@@ -266,7 +270,7 @@ if (isset($_POST['submitPost'])) {
                                         <div class="form-group has-success">
                                             <label for="cc-name" class="control-label mb-1">Category</label>
                                             <select name="category" id="select" class="form-control" required>
-                                                <option disabled selected value="0">Please select</option>
+                                                <option disabled selected>Please select</option>
                                                 <?php
                                                 //Extracting category data
                                                 $extract = "SELECT * FROM media_centre_categories ORDER BY datetime desc";
