@@ -10,7 +10,7 @@ if (isset($_POST['submitPost'])) {
     $title = test_input($_POST['title']);
     $title = strtoupper($title);
     $title = test_input($title);
-    $category = test_input($_POST['category']);
+    @$category = test_input($_POST['category']);
     $post = sanitize($_POST['post']);
 
     $currentTime = time();
@@ -36,21 +36,32 @@ if (isset($_POST['submitPost'])) {
 
 
     if (empty($title) || empty($category)) {
-        $_SESSION['ErrorMessage'] = "Title and Category can't be empty.";
-    } elseif (strlen($title) < 2) {
-        $_SESSION['ErrorMessage'] = "Title should be at least two characters.";
-    } elseif (empty($photoFullname)) {
-        $_SESSION['ErrorMessage'] = "Please select a valid image.";
-    } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
-        $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
-    } elseif (empty($post)) {
-        $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
+        $errors[] = "Title and Category can't be empty.";
     } else {
+        if (strlen($title) < 2) {
+            $errors[] = "Title should be at least two characters.";
+        }
+    }
+
+    if (empty($photoFullname)) {
+        $errors[] = "Please select a valid image.";
+    } else {
+        if ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
+            $errors[] = "Image must be of the type jpeg, jpg, png or gif.";
+        }
+    }
+
+    if (empty($post)) {
+        $errors[] = "Post content is required.";
+    }
+    if (empty($errors)) {
         move_uploaded_file($tmp_loc, $target);
         $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New post entered successfully.";
         redirect_to('index.php');
+    } else {
+        $errors[] = "An error occurred. Please try again.";
     }
 }
 ?>
@@ -259,6 +270,9 @@ if (isset($_POST['submitPost'])) {
                                         <?php
                                         echo Message();
                                         echo SuccessMessage();
+                                        if (!empty($errors)) {
+                                            echo display_errors($errors);
+                                        }
                                         ?>
                                     </div>
                                     <hr />
