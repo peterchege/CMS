@@ -60,8 +60,6 @@ if (isset($_POST['submitPost'])) {
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New post entered successfully.";
         redirect_to('index.php');
-    } else {
-        $errors[] = "An error occurred. Please try again.";
     }
 }
 ?>
