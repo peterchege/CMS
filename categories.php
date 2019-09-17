@@ -295,7 +295,7 @@ $SrNo = 0;
                                                             <div class="table-data__info">
                                                                 <h6><?= $t['creatorname']; ?></h6>
                                                                 <span>
-                                                                    <a href=""><?= $t['email']; ?> </a>
+                                                                    <a href= "#"><?= $t['email']; ?> </a>
                                                                 </span>
                                                             </div>
                                                         </td>
