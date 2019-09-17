@@ -456,10 +456,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [<?= $month_implode; ?>],
+                    labels: [ < ? = $month_implode; ? > ],
                     type: 'line',
                     datasets: [{
-                        data: [<?= $row_result_implode; ?>],
+                        data: [ < ? = $row_result_implode; ? > ],
                         label: 'Admins added',
                         backgroundColor: 'rgba(255,255,255,.1)',
                         borderColor: 'rgba(255,255,255,.55)',
@@ -521,10 +521,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [<?= $month_implode; ?>],
+                    labels: [ < ? = $month_implode; ? > ],
                     type: 'line',
                     datasets: [{
-                        data: [<?= $posts_row_results_implode ?>],
+                        data: [ < ? = $posts_row_results_implode ? > ],
                         label: 'Posts added',
                         backgroundColor: 'transparent',
                         borderColor: 'rgba(255,255,255,.55)',
@@ -592,10 +592,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [<?= $month_implode; ?>],
+                    labels: [ < ? = $month_implode; ? > ],
                     type: 'line',
                     datasets: [{
-                        data: [<?= $category_row_implode; ?>],
+                        data: [ < ? = $category_row_implode; ? > ],
                         label: 'Categories added',
                         backgroundColor: 'transparent',
                         borderColor: 'rgba(255,255,255,.55)',

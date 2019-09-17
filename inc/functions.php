@@ -78,7 +78,7 @@ function confirm_login()
     alert('You are not logged in. please log in');
 </script>";
         echo "<script>
-    window.open('login.php', '_SELF');
+    window.open('login.php?login=error', '_SELF');
 </script>";
     }
 }
