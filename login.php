@@ -131,11 +131,7 @@ if (isset($_POST['submit'])) {
     <script src="js/main.js"></script>
     <script>
         $(document).ready(function() {
-            swal.fire({
-                title: 'Credentials error',
-                text: 'You must be logged in to view this page',
-                type: 'error'
-            });
+
         });
     </script>
 </body>
