@@ -187,7 +187,7 @@ $sno = 0;
                                             <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -197,8 +197,8 @@ $sno = 0;
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -321,7 +321,7 @@ $sno = 0;
                                 <h3 class="title-5 m-b-35">Posts table</h3>
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-right">
-                                        <a href="<?= 'newpost.php'; ?>"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
+                                        <a href="<?php echo 'newpost.php'; ?>"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
                                     </div>
                                 </div>
                                 <div class="table-responsive table-responsive-data2">
@@ -341,28 +341,28 @@ $sno = 0;
                                         <tbody>
                                             <?php while ($t = mysqli_fetch_assoc($execute)) : ?>
                                                 <tr class="tr-shadow">
-                                                    <td><?= ++$sno; ?></td>
-                                                    <td><?= $t['title']; ?></td>
-                                                    <td><?= $t['datetime']; ?></td>
-                                                    <td class="desc"><?= $t['author']; ?></td>
-                                                    <td><?= $t['category']; ?></td>
+                                                    <td><?php echo ++$sno; ?></td>
+                                                    <td><?php echo $t['title']; ?></td>
+                                                    <td><?php echo $t['datetime']; ?></td>
+                                                    <td class="desc"><?php echo $t['author']; ?></td>
+                                                    <td><?php echo $t['category']; ?></td>
                                                     <td>
-                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?= $t['image']; ?>" /></span>
+                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?php echo $t['image']; ?>" /></span>
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">
                                                             <?php if ($t['status'] == 0) : ?>
-                                                                <a href="index.php?show=<?= $t['id']; ?>"><button class="btn-success">Show</button></a>
+                                                                <a href="index.php?show=<?php echo $t['id']; ?>"><button class="btn-success">Show</button></a>
                                                             <?php else : ?>
-                                                                <a href="index.php?hide=<?= $t['id']; ?>"><button class="btn-primary">Hide</button></a>
+                                                                <a href="index.php?hide=<?php echo $t['id']; ?>"><button class="btn-primary">Hide</button></a>
                                                             <?php endif; ?>
-                                                            <a href="editpost.php?edit=<?= $t['id']; ?>"><button class="btn-success">Edit</button></a>
-                                                            <a href="deletepost.php?delete=<?= $t['id']; ?>"><button class="btn-danger">Delete</button></a>
+                                                            <a href="editpost.php?edit=<?php echo $t['id']; ?>"><button class="btn-success">Edit</button></a>
+                                                            <a href="deletepost.php?delete=<?php echo $t['id']; ?>"><button class="btn-danger">Delete</button></a>
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <a href="<?= 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                            <a href="<?php echo 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -456,10 +456,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [ < ? = $month_implode; ? > ],
+                    labels: [<?php echo $month_implode; ?>],
                     type: 'line',
                     datasets: [{
-                        data: [ < ? = $row_result_implode; ? > ],
+                        data: [<?php echo $row_result_implode; ?>],
                         label: 'Admins added',
                         backgroundColor: 'rgba(255,255,255,.1)',
                         borderColor: 'rgba(255,255,255,.55)',
@@ -521,10 +521,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [ < ? = $month_implode; ? > ],
+                    labels: [<?php echo $month_implode; ?>],
                     type: 'line',
                     datasets: [{
-                        data: [ < ? = $posts_row_results_implode ? > ],
+                        data: [<?php echo $posts_row_results_implode ?>],
                         label: 'Posts added',
                         backgroundColor: 'transparent',
                         borderColor: 'rgba(255,255,255,.55)',
@@ -592,10 +592,10 @@ $sno = 0;
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: [ < ? = $month_implode; ? > ],
+                    labels: [<?php echo $month_implode; ?>],
                     type: 'line',
                     datasets: [{
-                        data: [ < ? = $category_row_implode; ? > ],
+                        data: [<?php echo $category_row_implode; ?>],
                         label: 'Categories added',
                         backgroundColor: 'transparent',
                         borderColor: 'rgba(255,255,255,.55)',

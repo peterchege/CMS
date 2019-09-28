@@ -303,10 +303,10 @@ if (isset($_POST['submitEditedPost'])) {
                                                 <select name="category" id="select" class="form-control">
                                                     <option disabled selected value="0">Please select</option>
                                                     <?php
-                                                    // extracting category data
-                                                    $queryCategory = "SELECT * from media_centre_categories";
-                                                    $run = $conn->query($queryCategory);
-                                                    ?>
+                                                        // extracting category data
+                                                        $queryCategory = "SELECT * from media_centre_categories";
+                                                        $run = $conn->query($queryCategory);
+                                                        ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
                                                         <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
                                                             <?= $c['name']; ?>
