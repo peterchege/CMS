@@ -11,7 +11,6 @@ if (isset($_POST['submitReset'])) {
         // check if user email exists in the database
         $emailCheckExist = $conn->query("SELECT * FROM media_centre_admin_registration WHERE email = '$usernameEmail' ");
         $resetRecepient = mysqli_fetch_assoc($emailCheckExist);
-        echo 'rows discovered:' . mysqli_num_rows($emailCheckExist) . ' and email is ' . $usernameEmail;
         if (mysqli_num_rows($emailCheckExist) !== 1) {
             $errors[] = 'The email you entered does not exist in our database.';
         } else {
