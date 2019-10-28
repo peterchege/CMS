@@ -377,7 +377,7 @@ $sno = 0;
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="copyright">
-                                    <p>Copyright © 2019 United Pictures. All rights reserved.</p>
+                                    <p>Copyright © <?php echo date('Y'); ?> APA INSURANCE. All rights reserved.</p>
                                 </div>
                             </div>
                         </div>

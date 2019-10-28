@@ -219,7 +219,7 @@ if (isset($_POST['submitPost'])) {
                                             <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -229,8 +229,8 @@ if (isset($_POST['submitPost'])) {
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -274,10 +274,10 @@ if (isset($_POST['submitPost'])) {
                                         ?>
                                     </div>
                                     <hr />
-                                    <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="cc-payment" class="control-label mb-1">Title</label>
-                                            <input id="cc-pament" name="title" value="<?= ((isset($title)) ? $title : ''); ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                            <input id="cc-pament" name="title" value="<?php echo ((isset($title)) ? $title : ''); ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                         </div>
                                         <div class="form-group has-success">
                                             <label for="cc-name" class="control-label mb-1">Category</label>
@@ -290,8 +290,8 @@ if (isset($_POST['submitPost'])) {
                                                 $SrNo = 0;
                                                 ?>
                                                 <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                    <option <?= ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
-                                                        <?= $c['name']; ?>
+                                                    <option <?php echo ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
+                                                        <?php echo $c['name']; ?>
                                                     </option>
                                                 <?php endwhile; ?>
                                             </select>
@@ -307,7 +307,7 @@ if (isset($_POST['submitPost'])) {
                                                 <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
                                             <div class="col-12 col-md-12">
-                                                <textarea name="post" id="content" rows="20" placeholder="Content..." class="form-control ckeditor"><?= ((isset($post)) ? $post : '') ?></textarea>
+                                                <textarea name="post" id="content" rows="20" placeholder="Content..." class="form-control ckeditor"><?php echo ((isset($post)) ? $post : '') ?></textarea>
                                             </div>
                                         </div>
                                         <div>

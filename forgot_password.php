@@ -127,7 +127,7 @@ if (isset($_POST['submitReset'])) {
                                 echo display_errors($errors);
                             }
                             ?>
-                            <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <form class="media-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
                                     <label>Enter your email address to receive reset link.</label>
                                     <br>

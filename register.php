@@ -105,7 +105,7 @@ if (isset($_POST['register'])) {
                             if (!empty($errors))
                                 echo display_errors($errors);
                             ?>
-                            <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <form class="media-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
                                     <p class="form-group">Please register your account below:</p>
                                     <label>Username</label>

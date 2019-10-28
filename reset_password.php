@@ -104,7 +104,7 @@ if (!isset($_SESSION['password_reset_token'])) {
                                 echo display_errors($errors);
                             }
                             ?>
-                            <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <form class="media-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
                                     <label>New Password<label>
                                             <input class="au-input au-input--full" type="password" name="password" placeholder="" />

@@ -191,7 +191,7 @@ $SrNo = 0;
                                             <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -201,8 +201,8 @@ $SrNo = 0;
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -248,7 +248,7 @@ $SrNo = 0;
                                             echo SuccessMessage();
                                             ?>
                                             <label for="cc-payment" class="control-label mb-1">Name</label><br>
-                                            <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?= ((isset($category)) ? $category : ''); ?>" />
+                                            <input id="cc-pament" name="categoryName" type="text" class="form-control" aria-required="true" aria-invalid="false" value="<?php echo ((isset($category)) ? $category : ''); ?>" />
                                         </div>
                                         <br>
 
@@ -283,25 +283,25 @@ $SrNo = 0;
                                                 <?php while ($t = mysqli_fetch_assoc($run)) : ?>
                                                     <tr>
                                                         <td>
-                                                            <?= ++$SrNo ?>
+                                                            <?php echo ++$SrNo ?>
                                                         </td>
                                                         <td>
-                                                            <?= $t['datetime']; ?>
+                                                            <?php echo $t['datetime']; ?>
                                                         </td>
                                                         <td>
-                                                            <?= $t['name']; ?>
+                                                            <?php echo $t['name']; ?>
                                                         </td>
                                                         <td>
                                                             <div class="table-data__info">
-                                                                <h6><?= $t['creatorname']; ?></h6>
+                                                                <h6><?php echo $t['creatorname']; ?></h6>
                                                                 <span>
-                                                                    <a href= "#"><?= $t['email']; ?> </a>
+                                                                    <a href="#"><?php echo $t['email']; ?> </a>
                                                                 </span>
                                                             </div>
                                                         </td>
                                                         <td>
                                                             <div class="table-data-feature1">
-                                                                <a href="categories.php?delete=<?= test_input($t['id']); ?>"><button class="btn-danger"><i class="fas fa-ban flex-left"></i> Delete</button></a>
+                                                                <a href="categories.php?delete=<?php echo test_input($t['id']); ?>"><button class="btn-danger"><i class="fas fa-ban flex-left"></i> Delete</button></a>
                                                             </div>
                                                         </td>
                                                     </tr>

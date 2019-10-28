@@ -249,7 +249,7 @@ if (isset($_GET['delete'])) {
                                             <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -259,8 +259,8 @@ if (isset($_GET['delete'])) {
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -308,7 +308,7 @@ if (isset($_GET['delete'])) {
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </div>
-                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?= ((isset($email)) ? $email : ''); ?>">
+                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?php echo ((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
                                         <br>
@@ -351,25 +351,25 @@ if (isset($_GET['delete'])) {
                                             <?php while ($a = mysqli_fetch_assoc($run)) :  ?>
                                                 <tr>
                                                     <td>
-                                                        <?= ++$SrNo; ?>
+                                                        <?php echo ++$SrNo; ?>
                                                     </td>
                                                     <td>
-                                                        <?= $a['datetime']; ?>
+                                                        <?php echo $a['datetime']; ?>
                                                     </td>
                                                     <td>
                                                         <div class="table-data__info">
-                                                            <h6><?= $a['username']; ?></h6>
+                                                            <h6><?php echo $a['username']; ?></h6>
                                                             <span>
-                                                                <a><?= $a['email']; ?></a>
+                                                                <a><?php echo $a['email']; ?></a>
                                                             </span>
                                                         </div>
                                                     </td>
                                                     <td>
-                                                        <?= $a['added by']; ?>
+                                                        <?php echo $a['added by']; ?>
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature1">
-                                                            <a href="manage_admin.php?delete=<?= $a['id']; ?>"><button class="btn-danger"><i class="fas fa-ban"></i> Delete</button></a>
+                                                            <a href="manage_admin.php?delete=<?php echo $a['id']; ?>"><button class="btn-danger"><i class="fas fa-ban"></i> Delete</button></a>
                                                         </div>
                                                     </td>
                                                 </tr>

@@ -182,7 +182,7 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                             <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
@@ -192,8 +192,8 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -242,23 +242,23 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                     $runn = $conn->query($searchQuery);
                                     ?>
                                     <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
-                                        <form action="deletepost.php?delete=<?= $delete_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                                        <form action="deletepost.php?delete=<?php echo $delete_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="cc-payment" class="control-label mb-1">Title</label>
-                                                <input id="cc-pament" name="title" value="<?= $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                                <input id="cc-pament" name="title" value="<?php echo $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                             </div>
                                             <div class="form-group has-success">
                                                 <label for="cc-name" class="control-label mb-1">Category</label>
                                                 <select name="category" id="select" class="form-control">
                                                     <option disabled selected value="0">Please select</option>
                                                     <?php
-                                                    // extracting category data
-                                                    $queryCategory = "SELECT * from media_centre_categories";
-                                                    $run = $conn->query($queryCategory);
-                                                    ?>
+                                                        // extracting category data
+                                                        $queryCategory = "SELECT * from media_centre_categories";
+                                                        $run = $conn->query($queryCategory);
+                                                        ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                        <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
-                                                            <?= $c['name']; ?>
+                                                        <option <?php echo (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
+                                                            <?php echo $c['name']; ?>
                                                         </option>
                                                     <?php endwhile; ?>
                                                 </select>
@@ -266,7 +266,7 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                                 <br />
                                                 <div class="form-group">
                                                     <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                                    <img src="<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
+                                                    <img src="<?php echo $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
                                                 </div>
                                                 <br />
                                                 <br />
@@ -275,7 +275,7 @@ if (!isset($_GET['delete']) || empty($_GET['delete'])) {
                                                         <label for="textarea-input" class=" form-control-label">Post</label>
                                                     </div>
                                                     <div class="col-12 col-md-12">
-                                                        <textarea name="post" id="content" rows="9" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
+                                                        <textarea name="post" id="content" rows="9" placeholder="Content..." class="form-control"><?php echo $e['post']; ?></textarea>
                                                     </div>
                                                 </div>
                                                 <div>

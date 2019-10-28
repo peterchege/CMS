@@ -235,21 +235,21 @@ if (isset($_POST['submitEditedPost'])) {
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
                                         <div class="image">
-                                            <img src="images/apa_insurance_image_facebook.png " alt="<?= $_SESSION['username']; ?>" />
+                                            <img src="images/apa_insurance_image_facebook.png " alt="<?php echo $_SESSION['username']; ?>" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#"><?= $_SESSION['username']; ?></a>
+                                            <a class="js-acc-btn" href="#"><?php echo $_SESSION['username']; ?></a>
                                         </div>
                                         <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/apa_insurance_image_facebook.png" alt="<?= $_SESSION['username']; ?>" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="<?php echo $_SESSION['username']; ?>" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a href="#"><?= $_SESSION['username']; ?></a></h5>
-                                                    <span class="email"><?= $_SESSION['email']; ?></span>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
                                             <div class="account-dropdown__body">
@@ -293,10 +293,10 @@ if (isset($_POST['submitEditedPost'])) {
                                     <hr />
                                     <!-- Getting info based on edit id -->
                                     <?php while ($e = mysqli_fetch_assoc($runn)) : ?>
-                                        <form action="editpost.php?edit=<?= $edit_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
+                                        <form action="editpost.php?edit=<?php echo $edit_id; ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                             <div class="form-group">
                                                 <label for="cc-payment" class="control-label mb-1">Title</label>
-                                                <input id="cc-pament" name="title" value="<?= $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                                <input id="cc-pament" name="title" value="<?php echo $e['title']; ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                             </div>
                                             <div class="form-group has-success">
                                                 <label for="cc-name" class="control-label mb-1">Category</label>
@@ -308,8 +308,8 @@ if (isset($_POST['submitEditedPost'])) {
                                                         $run = $conn->query($queryCategory);
                                                         ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                        <option <?= (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
-                                                            <?= $c['name']; ?>
+                                                        <option <?php echo (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
+                                                            <?php echo $c['name']; ?>
                                                         </option>
                                                     <?php endwhile; ?>
                                                 </select>
@@ -318,12 +318,12 @@ if (isset($_POST['submitEditedPost'])) {
                                             <br />
                                             <div class="form-group">
                                                 <label for="cc-number" class="control-label mb-1">Existing Image</label>
-                                                <img src="<?= $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
+                                                <img src="<?php echo $e['image']; ?>" id="file-input" name="image" class="form-control-file" style="width:30vw; height:50vh;" />
                                             </div>
                                             <br />
                                             <div class="form-group">
                                                 <label for="cc-number" class="control-label mb-1">Upload Image</label>
-                                                <input type="file" id="file-input" name="image" class="form-control-file" value="../<?= $e['image']; ?>" />
+                                                <input type="file" id="file-input" name="image" class="form-control-file" value="../<?php echo $e['image']; ?>" />
                                             </div>
                                             <br />
                                             <div class="row">
@@ -331,14 +331,17 @@ if (isset($_POST['submitEditedPost'])) {
                                                     <label for="textarea-input" class=" form-control-label">Post</label>
                                                 </div>
                                                 <div class="col-12 col-md-12">
-                                                    <textarea name="post" id="content" rows="12" placeholder="Content..." class="form-control"><?= $e['post']; ?></textarea>
+                                                    <textarea name="post" id="content" rows="12" placeholder="Content..." class="form-control"><?php echo $e['post']; ?></textarea>
                                                 </div>
                                             </div>
                                             <div>
                                                 <br />
-                                                <button name="submitEditedPost" id="payment-button" type="submit" class="btn btn-lg btn-info btn-block">
+                                                <button name="submitEditedPost" id="payment-button" type="submit" class="btn btn-lg btn-primary">
                                                     <span id="payment-button-amount">Update Post</span>
                                                 </button>
+                                                <a name="" href="index.php" id="payment-button" class="btn btn-lg btn-info my-4 ">
+                                                    <span id="payment-button-amount">Cancel</span>
+                                                </a>
                                             </div>
                                         </form>
                                     <?php endwhile; ?>

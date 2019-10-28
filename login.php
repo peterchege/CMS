@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
                             echo Message();
                             echo SuccessMessage();
                             ?>
-                            <form class="media-form" action="<?= htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
+                            <form class="media-form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                                 <div class="form-group">
                                     <label>Email Address</label>
                                     <input class="au-input au-input--full" type="text" name="usernameEmail" placeholder="Email" />
