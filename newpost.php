@@ -56,7 +56,8 @@ if (isset($_POST['submitPost'])) {
     }
     if (empty($errors)) {
         move_uploaded_file($tmp_loc, $target);
-        $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
+        $query = "INSERT INTO media_centre_posts(`datetime`,title,category,author,`image`,post) 
+                VALUES('$dateTime','$title','$category','$admin','$pathandNameOfFile','$post')";
         $conn->query($query);
         $_SESSION['SuccessMessage'] = "New post entered successfully.";
         redirect_to('index.php');
