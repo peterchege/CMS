@@ -132,8 +132,7 @@ $sno = 0;
         <aside class="menu-sidebar d-none d-lg-block">
             <div class="logo">
                 <a href="index.php">
-                    <img style="width:40%; margin-left:40px; margin-top:0px;" src="images/logon.png"
-                        alt="apollo group" />
+                    <img style="width:40%; margin-left:40px; margin-top:0px;" src="images/logon.png" alt="apollo group" />
                 </a>
             </div>
             <div class="menu-sidebar__content js-scrollbar1">
@@ -194,13 +193,11 @@ $sno = 0;
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
-                                                        <img src="images/apa_insurance_image_facebook.png"
-                                                            alt="John Doe" />
+                                                        <img src="images/apa_insurance_image_facebook.png" alt="John Doe" />
                                                     </a>
                                                 </div>
                                                 <div class="content">
-                                                    <h5 class="name"><a
-                                                            href="#"><?php echo $_SESSION['username']; ?></a></h5>
+                                                    <h5 class="name"><a href="#"><?php echo $_SESSION['username']; ?></a></h5>
                                                     <span class="email"><?php echo $_SESSION['email']; ?></span>
                                                 </div>
                                             </div>
@@ -324,9 +321,7 @@ $sno = 0;
                                 <h3 class="title-5 m-b-35">Posts table</h3>
                                 <div class="table-data__tool">
                                     <div class="table-data__tool-right">
-                                        <a href="<?php echo 'newpost.php'; ?>"><button
-                                                class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i
-                                                    class="zmdi zmdi-plus"></i>add post</button></a>
+                                        <a href="<?php echo 'newpost.php'; ?>"><button class="au-btn au-btn-icon au-btn--green au-btn--small pull-right"><i class="zmdi zmdi-plus"></i>add post</button></a>
                                     </div>
                                 </div>
                                 <div class="table-responsive table-responsive-data2">
@@ -345,42 +340,33 @@ $sno = 0;
                                         </thead>
                                         <tbody>
                                             <?php while ($t = mysqli_fetch_assoc($execute)) : ?>
-                                            <tr class="tr-shadow">
-                                                <td><?php echo ++$sno; ?></td>
-                                                <td><?php echo $t['title']; ?></td>
-                                                <td><?php echo $t['datetime']; ?></td>
-                                                <td class="desc"><?php echo $t['author']; ?></td>
-                                                <td><?php echo $t['category']; ?></td>
-                                                <td>
-                                                    <span class="status--process"><img
-                                                            style="max-width:20vh; max-height:10%;"
-                                                            src="/../cms/<?php echo $t['image']; ?>" /></span>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <?php if ($t['status'] == 0) : ?>
-                                                        <a href="index.php?show=<?php echo $t['id']; ?>"><button
-                                                                class="btn-success">Show</button></a>
-                                                        <?php else : ?>
-                                                        <a href="index.php?hide=<?php echo $t['id']; ?>"><button
-                                                                class="btn-primary">Hide</button></a>
-                                                        <?php endif; ?>
-                                                        <a href="editpost.php?edit=<?php echo $t['id']; ?>"><button
-                                                                class="btn-success">Edit</button></a>
-                                                        <a href="deletepost.php?delete=<?php echo $t['id']; ?>"><button
-                                                                class="btn-danger">Delete</button></a>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="table-data-feature">
-                                                        <a href="<?php echo 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>"
-                                                            target="_blank"><button class="btn-primary"><i
-                                                                    class="fas fa-desktop"></i> &nbsp; Live
-                                                                Preview</button></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr class="spacer"></tr>
+                                                <tr class="tr-shadow">
+                                                    <td><?php echo ++$sno; ?></td>
+                                                    <td><?php echo $t['title']; ?></td>
+                                                    <td><?php echo $t['datetime']; ?></td>
+                                                    <td class="desc"><?php echo $t['author']; ?></td>
+                                                    <td><?php echo $t['category']; ?></td>
+                                                    <td>
+                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?php echo $t['image']; ?>" /></span>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <?php if ($t['status'] == 0) : ?>
+                                                                <a href="index.php?show=<?php echo $t['id']; ?>"><button class="btn-success">Show</button></a>
+                                                            <?php else : ?>
+                                                                <a href="index.php?hide=<?php echo $t['id']; ?>"><button class="btn-primary">Hide</button></a>
+                                                            <?php endif; ?>
+                                                            <a href="editpost.php?edit=<?php echo $t['id']; ?>"><button class="btn-success">Edit</button></a>
+                                                            <a href="deletepost.php?delete=<?php echo $t['id']; ?>"><button class="btn-danger">Delete</button></a>
+                                                        </div>
+                                                    </td>
+                                                    <td>
+                                                        <div class="table-data-feature">
+                                                            <a href="<?php echo 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <tr class="spacer"></tr>
                                             <?php endwhile; ?>
                                         </tbody>
                                     </table>
