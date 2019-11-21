@@ -414,12 +414,6 @@ $sno = 0;
     <!-- Main JS-->
     <script src="js/main.js"></script>
     <?php
-    // $conn = mysqli_connect("localhost", "root", "", "apa");
-    // $date = date("y-m-d") . '<br>';
-    // $end_date = date("2017-01-01") . '<br>';
-    // $current_month = date("m") . '<br>';
-
-
     $month = array();
     $row_result = array();
     $posts_results = array();
