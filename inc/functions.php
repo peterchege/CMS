@@ -1,7 +1,6 @@
 <?php
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/db.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/sessions.php';
-require_once $_SERVER['DOCUMENT_ROOT'] . '/cms/inc/functions.php';
+require_once 'db.php';
+require_once 'sessions.php';
 
 //redirect
 function redirect_to($new_location)
