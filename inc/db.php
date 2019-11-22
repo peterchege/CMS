@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['DOCUMENT_ROOT'] == '/var/www/html') {
-	$conn = mysqli_connect('localhost', 'root', 'VDW-pNs-Mk6-gLQ', 'apa_website');
+	$conn = mysqli_connect('localhost', 'root', 'VDW-pNs-Mk6-gLQ', 'dev_website');
 } elseif ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
 	$conn = mysqli_connect('localhost', 'root', '', 'apa');
 } else {
