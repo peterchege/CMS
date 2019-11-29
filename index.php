@@ -29,6 +29,13 @@ if (isset($_GET['hide'])) {
 $viewQuery = "SELECT * FROM media_centre_posts ORDER BY id desc ";
 $execute = $conn->query($viewQuery);
 $sno = 0;
+
+//image preview display
+if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
+    $preview_path = 'http://localhost/apainsurance';
+} else {
+    $preview_path = 'http://63.33.193.137';
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -362,7 +369,7 @@ $sno = 0;
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">
-                                                            <a href="<?php echo 'http://localhost/apainsurance/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
+                                                            <a href="<?php echo $preview_path . '/media_centre_detail.php?post=' . $t['id']; ?>" target="_blank"><button class="btn-primary"><i class="fas fa-desktop"></i> &nbsp; Live Preview</button></a>
                                                         </div>
                                                     </td>
                                                 </tr>
