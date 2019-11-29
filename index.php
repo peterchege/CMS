@@ -347,7 +347,7 @@ $sno = 0;
                                                     <td class="desc"><?php echo $t['author']; ?></td>
                                                     <td><?php echo $t['category']; ?></td>
                                                     <td>
-                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="/../cms/<?php echo $t['image']; ?>" /></span>
+                                                        <span class="status--process"><img style="max-width:20vh; max-height:10%;" src="<?php echo $t['image']; ?>" /></span>
                                                     </td>
                                                     <td>
                                                         <div class="table-data-feature">

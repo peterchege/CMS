@@ -129,11 +129,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Main JS-->
     <script src="js/main.js"></script>
-    <script>
-        $(document).ready(function() {
-
-        });
-    </script>
 </body>
 
 </html>
