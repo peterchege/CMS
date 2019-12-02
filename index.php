@@ -36,6 +36,14 @@ if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
 } else {
     $preview_path = 'http://63.33.193.137';
 }
+
+//deleting irrelevant images
+$images = glob("images/posts/*.*");
+foreach ($images as $image) {
+    $sql = mysqli_query($conn, "SELECT `image` FROM media_centre_posts WHERE `image`='$image' ");
+    if (mysqli_num_rows($sql) == 0)
+        unlink($image);
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -346,6 +354,7 @@ if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
                                             </tr>
                                         </thead>
                                         <tbody>
+
                                             <?php while ($t = mysqli_fetch_assoc($execute)) : ?>
                                                 <tr class="tr-shadow">
                                                     <td><?php echo ++$sno; ?></td>
