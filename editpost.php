@@ -68,13 +68,16 @@ if (isset($_POST['submitEditedPost'])) {
     } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
         $_SESSION['ErrorMessage'] = "Image must be of the type jpeg, jpg, png or gif.";
     } else {
-        move_uploaded_file($tmp_loc, $target);
-        $query = "UPDATE media_centre_posts SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
-        $conn->query($query);
-        $_SESSION['SuccessMessage'] = "Post updated successfully";
-        unset($_SESSION['edit_id']);
-        echo "<script>alert('Post updated successfully');</script> ";
-        echo "<script>window.open('index.php','_SELF')</script>";
+        if (move_uploaded_file($tmp_loc, $target)) {
+            $query = "UPDATE media_centre_posts SET `datetime`='$dateTime', title='$title', category='$category', author='$admin', image='$pathandNameOfFile', post='$post' WHERE id='$edit_id'";
+            $conn->query($query);
+            $_SESSION['SuccessMessage'] = "Post updated successfully";
+            unset($_SESSION['edit_id']);
+            echo "<script>alert('Post updated successfully');</script> ";
+            echo "<script>window.open('index.php','_SELF')</script>";
+        } else {
+            $_SESSION['ErrorMessage'] = "Error uploading file.";
+        }
     }
 }
 
