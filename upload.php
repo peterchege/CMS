@@ -11,6 +11,8 @@ if (isset($_FILES['upload']['name'])) {
     chmod('upload', 0777);
     if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
         $urlD = 'http://localhost/cms/upload/';
+    } else {
+        $urlD = 'http://63.33.193.137/dev/site/cms/upload/';
     }
 
     $allowed_extension = array("jpg", "gif", "png");
