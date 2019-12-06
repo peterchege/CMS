@@ -66,7 +66,7 @@ if (isset($_POST['submitPost'])) {
             $_SESSION['SuccessMessage'] = "New post entered successfully.";
             redirect_to('index.php');
         } else {
-            $_SESSION['ErrorMessage'] = "Error uploading file.";
+            $_SESSION['ErrorMessage'] = "Error uploading file: ".$_FILES["file"]["error"];
         }
     }
 }
