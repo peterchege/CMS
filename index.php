@@ -41,8 +41,9 @@ if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
 $images = glob("images/posts/*.*");
 foreach ($images as $image) {
     $sql = mysqli_query($conn, "SELECT `image` FROM media_centre_posts WHERE `image`='$image' ");
-    if (mysqli_num_rows($sql) == 0)
+    if (mysqli_num_rows($sql) == 0) {
         unlink($image);
+    }
 }
 ?>
 <!DOCTYPE html>
