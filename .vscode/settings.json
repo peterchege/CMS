@@ -1,4 +1,11 @@
 {
     "liveServer.settings.port": 5501,
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "spellright.language": [
+        "en"
+    ],
+    "spellright.documentTypes": [
+        "markdown",
+        "latex"
+    ]
 }
