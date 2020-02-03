@@ -32,9 +32,9 @@ if (isset($_POST['submitPost'])) {
         if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
             $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
         } else {
-            $target = $_SERVER['DOCUMENT_ROOT'] . "/dev/site/cms/images/posts/" . $fullPhotoName;
+            $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
         }
-        
+
         $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
     }
 
@@ -66,7 +66,7 @@ if (isset($_POST['submitPost'])) {
             $_SESSION['SuccessMessage'] = "New post entered successfully.";
             redirect_to('index.php');
         } else {
-            $_SESSION['ErrorMessage'] = "Error uploading file: ".$_FILES["file"]["error"];
+            $_SESSION['ErrorMessage'] = "Error uploading file: " . $_FILES["file"]["error"];
         }
     }
 }
@@ -285,7 +285,7 @@ if (isset($_POST['submitPost'])) {
                                     <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" novalidate="novalidate" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label for="cc-payment" class="control-label mb-1">Title</label>
-                                            <input id="cc-pament" name="title" value="<?php echo((isset($title)) ? $title : ''); ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
+                                            <input id="cc-pament" name="title" value="<?php echo ((isset($title)) ? $title : ''); ?>" type="text" class="form-control" aria-required="true" aria-invalid="false" />
                                         </div>
                                         <div class="form-group has-success">
                                             <label for="cc-name" class="control-label mb-1">Category</label>
@@ -298,7 +298,7 @@ if (isset($_POST['submitPost'])) {
                                                 $SrNo = 0;
                                                 ?>
                                                 <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                    <option <?php echo((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
+                                                    <option <?php echo ((isset($category) && $category == $c['name']) ? 'selected' : ''); ?>>
                                                         <?php echo $c['name']; ?>
                                                     </option>
                                                 <?php endwhile; ?>
@@ -315,7 +315,7 @@ if (isset($_POST['submitPost'])) {
                                                 <label for="textarea-input" class=" form-control-label">Post</label>
                                             </div>
                                             <div class="col-12 col-md-12">
-                                                <textarea name="post" id="content" rows="20" placeholder="Content..." class="form-control ckeditor"><?php echo((isset($post)) ? $post : '') ?></textarea>
+                                                <textarea name="post" id="content" rows="20" placeholder="Content..." class="form-control ckeditor"><?php echo ((isset($post)) ? $post : '') ?></textarea>
                                             </div>
                                         </div>
                                         <div>

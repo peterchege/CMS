@@ -51,7 +51,7 @@ if (isset($_POST['submitEditedPost'])) {
         if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
             $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
         } else {
-            $target = $_SERVER['DOCUMENT_ROOT'] . "/dev/site/cms/images/posts/" . $fullPhotoName;
+            $target = $_SERVER['DOCUMENT_ROOT'] . "/cms/images/posts/" . $fullPhotoName;
         }
         $pathandNameOfFile = $photoUploadPath . $fullPhotoName;
     }
@@ -59,10 +59,10 @@ if (isset($_POST['submitEditedPost'])) {
 
     if (empty($title) || empty($category)) {
         $_SESSION['ErrorMessage'] = "Title can't be empty";
-    //redirect_to("categories.php");
+        //redirect_to("categories.php");
     } elseif (strlen($title) < 2) {
         $_SESSION['ErrorMessage'] = "Title should be at least two characters";
-    //redirect_to("categories.php");
+        //redirect_to("categories.php");
     } elseif (empty($photoFullname)) {
         $_SESSION['ErrorMessage'] = "Please select a valid image.";
     } elseif ($filetype != 'image/jpeg' && $filetype != 'image/png' && $filetype != 'image/gif' && $filetype != 'image/jpg') {
@@ -309,12 +309,12 @@ if (isset($_POST['submitEditedPost'])) {
                                                 <select name="category" id="select" class="form-control">
                                                     <option disabled selected value="0">Please select</option>
                                                     <?php
-                                                        // extracting category data
-                                                        $queryCategory = "SELECT * from media_centre_categories";
-                                                        $run = $conn->query($queryCategory);
-                                                        ?>
+                                                    // extracting category data
+                                                    $queryCategory = "SELECT * from media_centre_categories";
+                                                    $run = $conn->query($queryCategory);
+                                                    ?>
                                                     <?php while ($c = mysqli_fetch_assoc($run)) : ?>
-                                                        <option <?php echo(($c['name'] == $e['category']) ? 'selected' : ''); ?>>
+                                                        <option <?php echo (($c['name'] == $e['category']) ? 'selected' : ''); ?>>
                                                             <?php echo $c['name']; ?>
                                                         </option>
                                                     <?php endwhile; ?>

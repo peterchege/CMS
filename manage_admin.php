@@ -30,20 +30,16 @@ if (isset($_POST['submitNewAdmin'])) {
         $mail->isSMTP();                                      // Set mailer to use SMTP
         $mail->isHTML(true);
         $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = 'anthony.baru@apollo.co.ke';                 // SMTP username
-            $mail->Password = 'Abaru1!';                           // SMTP password
-            //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
+        $mail->Username = 'apa.website@apollo.co.ke';                 // SMTP username
+        $mail->Password = 'Apa321$321';                           // SMTP password
+        //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
+        $mail->Port = 25;                                    // TCP port to connect to
 
-            $mail->setFrom('anthony.baru@apollo.co.ke', 'Tony Invite ');
+        $mail->setFrom('apa.website@apollo.co.ke', 'APA WEBSITE CMS');
         $mail->addAddress("{$email}");     // Add a recipient
         //$mail->addAddress('ellen@example.com');               // Name is optional
         $mail->addReplyTo('no-reply@apollo.co.ke', 'No reply');
-        $mail->addBCC('scarletjasmine3@gmail.com');
-
-        //$mail->addBCC("{$email}");
-        //$mail->addBCC("{$email}");
+        $mail->addBCC('anthonybaru@gmail.com');
         $mail->Subject = 'INVITATION LINK.';
 
         // Program to display URL of current page.
@@ -63,19 +59,15 @@ if (isset($_POST['submitNewAdmin'])) {
         // Append the requested resource location to the URL
         //$link .= $_SERVER['SERVER_NAME'];
 
-        $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE MEDIA CENTRE AND CSR CMS. Please click the link to create your account: </br>' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
+        $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE CMS. Please click the link to create your account: </br>' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
 
         if ($mail->send()) {
             $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added by`) VALUES('$dateTime','$invite_token','$email','$admin')";
             $conn->query($query);
-            //echo 'Email sent successfully to ' . $email;
             $_SESSION['SuccessMessage'] = 'Activation link sent successfully to: ' . $email . '.';
         } else {
             $_SESSION['ErrorMessage'] = 'Something went wrong. Please try again. Activation link not sent.';
         }
-        // {
-        //     $_SESSION['ErroMessage'] = "Something went wrong. Please try again.";
-        // }
     }
 }
 
@@ -308,7 +300,7 @@ if (isset($_GET['delete'])) {
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </div>
-                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?php echo((isset($email)) ? $email : ''); ?>">
+                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?php echo ((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
                                         <br>
