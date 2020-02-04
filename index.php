@@ -34,7 +34,7 @@ $sno = 0;
 if ($_SERVER['DOCUMENT_ROOT'] == 'C:/xampp/htdocs') {
     $preview_path = 'http://localhost/apainsurance';
 } else {
-    $preview_path = 'http://63.33.193.137';
+    $preview_path = 'http://3.15.38.75';
 }
 
 //deleting irrelevant images
