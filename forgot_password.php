@@ -25,13 +25,16 @@ if (isset($_POST['submitReset'])) {
             require_once 'mailer/SMTP.php';
 
             $mail = new PHPMailer;
-            $mail->isSMTP();                                      // Set mailer to use SMTP
-            $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
-            $mail->SMTPAuth = true;                               // Enable SMTP authentication
-            $mail->Username = 'anthony.baru@apollo.co.ke';                 // SMTP username
-            $mail->Password = 'Abaru1!';                           // SMTP password
-            //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-            $mail->Port = 587;                                    // TCP port to connect to
+            $mail->IsSMTP();
+            $mail->isHTML(true);
+            $mail->SMTPDebug = 0;
+            $mail->Debugoutput = 'echo';
+            $mail->Host = 'mail.apainsurance.org';
+            $mail->SMTPAuth   = true;
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+            $mail->Username = 'apa.website@apollo.co.ke';
+            $mail->Password = 'Apa321$321';
 
             $mail->setFrom('anthony.baru@apollo.co.ke', 'Tony Dev ');
             $mail->addAddress("{$usernameEmail}", $resetRecepient['username']);     // Add a recipient
@@ -43,20 +46,21 @@ if (isset($_POST['submitReset'])) {
             //$mail->addBCC("{$email}");
             $mail->Subject = 'Reset Account Link.';
 
-            // Program to display URL of current page. 
+            // Program to display URL of current page.
 
-            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
                 $link = "https";
-            else
+            } else {
                 $link = "http";
+            }
 
-            // Here append the common URL characters. 
+            // Here append the common URL characters.
             $link .= "://";
 
-            // Append the host(domain name, ip) to the URL. 
+            // Append the host(domain name, ip) to the URL.
             //$link .= $_SERVER['HTTP_HOST'];
 
-            // Append the requested resource location to the URL 
+            // Append the requested resource location to the URL
             //$link .= $_SERVER['SERVER_NAME'];
 
             $mail->Body    = 'Please click the link to reset your password: ' . $link . $_SERVER['HTTP_HOST'] . '/cms/reset_password.php?password_reset_token=' . $token . '';

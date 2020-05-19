@@ -27,13 +27,16 @@ if (isset($_POST['submitNewAdmin'])) {
         $invite_token = bin2hex(openssl_random_pseudo_bytes(40));
 
         $mail = new PHPMailer;
-        $mail->isSMTP();                                      // Set mailer to use SMTP
+        $mail->IsSMTP();
         $mail->isHTML(true);
-        $mail->Host = 'mail.apainsurance.ke';  // Specify main and backup SMTP servers
-        $mail->Username = 'apa.website@apollo.co.ke';                 // SMTP username
-        $mail->Password = 'Apa321$321';                           // SMTP password
-        //$mail->SMTPSecure = 'ssl';                            // Enable TLS encryption, `ssl` also accepted
-        $mail->Port = 25;                                    // TCP port to connect to
+        $mail->SMTPDebug = 0;
+        $mail->Debugoutput = 'echo';
+        $mail->Host = 'mail.apainsurance.org';
+        $mail->SMTPAuth   = true;
+        $mail->SMTPSecure = 'ssl';
+        $mail->Port = 465;
+        $mail->Username = 'apa.website@apollo.co.ke';
+        $mail->Password = 'Apa321$321';
 
         $mail->setFrom('apa.website@apollo.co.ke', 'APA WEBSITE CMS');
         $mail->addAddress("{$email}");     // Add a recipient
@@ -62,9 +65,13 @@ if (isset($_POST['submitNewAdmin'])) {
         $mail->Body    = 'You have been invited to be an Admin of APA INSURANCE CMS. Please click the link to create your account: </br>' . $link . $_SERVER['HTTP_HOST'] . '/cms/register.php?invite_token=' . $invite_token . '';
 
         if ($mail->send()) {
-            $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added by`) VALUES('$dateTime','$invite_token','$email','$admin')";
-            $conn->query($query);
-            $_SESSION['SuccessMessage'] = 'Activation link sent successfully to: ' . $email . '.';
+            $query = "INSERT INTO media_centre_admin_registration(`datetime`,`invite_token`, email,`added_by`) VALUES('$dateTime','$invite_token','$email','$admin')";
+            $inserAdmin=$conn->query($query);
+            if ($inserAdmin) {
+                $_SESSION['SuccessMessage'] = 'Activation link sent successfully to: ' . $email . '.';
+            } else {
+                $_SESSION['ErrorMessage'] = 'Error adding user to db.'.mysqli_error($conn);
+            }
         } else {
             $_SESSION['ErrorMessage'] = 'Something went wrong. Please try again. Activation link not sent.';
         }
@@ -300,7 +307,7 @@ if (isset($_GET['delete'])) {
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-envelope"></i>
                                                 </div>
-                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?php echo ((isset($email)) ? $email : ''); ?>">
+                                                <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="<?php echo((isset($email)) ? $email : ''); ?>">
                                             </div>
                                         </div>
                                         <br>
